@@ -1,0 +1,50 @@
+.medicaldetails details {
+    border: 1px solid #ccc;
+    padding: 10px;
+    background: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px 0;
+}
+
+.medicaldetails summary {
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 5px;
+    display: flex;
+}
+
+.medicaldetails table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    background: #fff;
+}
+
+.medicaldetails thead {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.medicaldetails th,
+td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+.medicaldetails tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+@media (max-width: 768px) {
+    .medicaldetails table {
+        font-size: 14px;
+    }
+
+    .medicaldetails th,
+    td {
+        padding: 8px;
+    }
+}

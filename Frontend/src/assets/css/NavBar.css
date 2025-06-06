@@ -1,0 +1,95 @@
+.navbar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1000;
+    background-color: rgb(255, 236, 125);
+    width: 100vw;
+    height: 8vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+.navbar-bnsDiv {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.navbar-title-div {
+    display: flex;
+}
+
+.navbar-icon {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.navbar-title {
+    font-size: 20px;
+    margin-left: 10px;
+    font-weight: bold;
+}
+
+.navbar-bns {
+    padding: 5px;
+    margin: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    align-items: center;
+    background-color: lightcyan;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-bns:hover {
+    background-color: lightblue;
+}
+
+.navbar-pushtocorner {
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+}
+
+.navbar-item {
+    padding: 0 10px;
+    position: relative;
+}
+
+.dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    padding: 10px;
+    border: 1px solid #222;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    width: max-content;
+}
+
+.userprofilemenu {
+    border: 1px solid black;
+    cursor: pointer;
+}
+
+.userprofileBn {
+    margin: 0 1em;
+    cursor: pointer;
+}
+
+.userprofilelogo {
+    height: 40px;
+    aspect-ratio: 1/1;
+}
+
+.navmenu {
+    margin: 0 1em;
+    cursor: pointer;
+}

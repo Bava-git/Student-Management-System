@@ -1,0 +1,104 @@
+.leavemanagement {
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+    flex-direction: row;
+}
+
+.leavemanagement-table-titleDiv {
+    /* border: 1px solid black; */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+    margin: 5px;
+}
+
+.leavemanagement-actionBn-div {
+    /* border: 1px solid black; */
+    padding: 5px;
+    margin: 5px;
+}
+
+.leavemanagement-actionBn {
+    /* border: 1px solid black; */
+    padding: 5px;
+    margin: 5px;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0px 1px 2px 0px black;
+
+    &:hover {
+        background-color: rgba(102, 64, 255, 0.765);
+    }
+}
+
+.leavemanagement-table-title {
+    text-align: start;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 5px;
+    margin: 5px;
+    text-align: center;
+}
+
+.leavemanagement-table,
+.leavemanagement-add {
+    padding: 30px;
+    margin: 10px;
+    /* border: 1px solid black; */
+    box-shadow: 0px 4px 8px 0px black;
+    border-radius: 20px;
+    background-color: lightsteelblue;
+    width: 70%;
+    overflow: auto;
+}
+
+.leavemanagement-add {
+    height: max-content;
+}
+
+.leavemanagement-add-field {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin: 10px;
+}
+
+.leavemanagement-add-field input {
+    border: 1px solid black;
+}
+
+.leavemanagement-add-field select {
+    border: 1px solid black;
+}
+
+.leavemanagement-add-BnDiv {
+    padding: 10px;
+    margin: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.leavemanagement-add-Bn {
+    /* border: 1px solid black; */
+    padding: 5px;
+    margin: 5px;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0px 1px 2px 0px black;
+}
+
+.leavemanagement-add-Bn:hover {
+    background-color: lightblue;
+}
+
+.leavemanagement-table table {
+    width: 100%;
+}
+
+.leavemanagement-table th,
+td {
+    border: 1px solid black;
+}

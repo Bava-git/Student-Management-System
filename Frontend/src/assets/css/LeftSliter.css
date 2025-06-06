@@ -1,0 +1,48 @@
+.leftSilter {
+    position: fixed;
+    top: 0;
+    left: 0px;
+    z-index: 0;
+    height: 100%;
+    background-color: #8da2e0;
+    padding: 100px 0;
+    transition: width 0.5s;
+    width: 50px;
+}
+
+.leftSilter-Bns {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 5px;
+    margin: 5px;
+    background-color: transparent;
+    border-radius: 20px;
+    border: 0;
+    transition: color 0.5s;
+    /* width: 100px; */
+}
+
+.leftSilter-icon {
+    width: 25px;
+    height: 25px;
+    margin-right: 10px;
+    margin-left: 5px;
+}
+
+.leftSilter span {
+    display: none;
+    font-size: 15px;
+}
+
+.leftSilter-Bns :hover {
+    color: rgba(251, 0, 0, 0.5);
+}
+
+.leftSilter:hover span {
+    display: block;
+}
+
+.leftSilter:hover {
+    width: 160px;
+}

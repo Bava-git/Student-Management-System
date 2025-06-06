@@ -1,0 +1,137 @@
+.homepage {
+  margin: 40px auto;
+  padding: 30px;
+  background: white;
+  border-radius: 15px;
+  /* box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2); */
+  transition: transform 0.3s ease;
+}
+
+.hero {
+  background: linear-gradient(to right, #0072ff, #00c6ff);
+  color: white;
+  text-align: center;
+  padding: 60px;
+  border-radius: 15px 15px 0 0;
+}
+
+.hero h1 {
+  font-size: 42px;
+  margin: 0;
+}
+
+.hero p {
+  font-size: 20px;
+  font-style: italic;
+}
+
+.hero .cta-button {
+  display: inline-block;
+  background: #ff5733;
+  color: white;
+  padding: 12px 18px;
+  border-radius: 6px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: background 0.3s ease;
+}
+
+.hero .cta-button:hover {
+  background: #d32f2f;
+}
+
+.homepage section {
+  padding: 30px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  transition: background 0.3s;
+}
+
+.homepage section h2 {
+  font-size: 28px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.homepage section h2:not(.admissions_h2)::after {
+  content: "";
+  display: block;
+  width: 80px;
+  height: 3px;
+  background: #ff5733;
+  margin-top: 5px;
+}
+
+.homepage section ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.homepage section ul li {
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+.admissions {
+  background: linear-gradient(to right, #ffdd00, #ff8800);
+  text-align: center;
+  color: white;
+  border-radius: 8px;
+}
+
+.admissions .cta-button {
+  background: white;
+  color: #ff5733;
+  padding: 12px 20px;
+  border-radius: 6px;
+  display: inline-block;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.admissions .cta-button:hover {
+  background: #ff5733;
+  color: white;
+}
+
+.footer {
+  background: #222;
+  color: white;
+  text-align: center;
+  padding: 30px;
+}
+
+.footer a {
+  color: #ffdd00;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* ********************************************************************** */
+.loading-screen {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #f4f4f4;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #0072ff;
+  border-top: 4px solid transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}

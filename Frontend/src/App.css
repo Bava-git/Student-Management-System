@@ -1,0 +1,12 @@
+   @layer base {
+       * {
+           padding: 0;
+           margin: 0;
+           box-sizing: border-box;
+       }
+   }
+
+   body {
+       margin-left: 50px;
+       margin-top: 60px;
+   }

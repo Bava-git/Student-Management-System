@@ -1,0 +1,551 @@
+@import url('https://fonts.googleapis.com/css2?family=Winky+Sans:ital,wght@0,300..900;1,300..900&display=swap');
+
+.studentReport-attendance {
+    width: max-content;
+    min-height: 240px;
+    background-color: white;
+    box-shadow: 0 2px 6px 0 #192e4c14;
+    margin: 10px;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.studentReport-attendance-calendarview {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.studentReport-attendance-title {
+    padding: 10px;
+    font-size: 20px;
+    text-align: center;
+}
+
+.standardlist {
+    width: max-content;
+    height: max-content;
+    background-color: #fe8081;
+    border-radius: 10px;
+    margin: 20px;
+    padding: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.standardlist-section {
+    /* margin-left: 30px; */
+    margin: 5px;
+    padding: 0px 10px;
+}
+
+.standardlist-section a:hover {
+    background-color: #eaede3;
+
+}
+
+.studentlist {
+    margin: 20px;
+    border-radius: 10px;
+    padding: 20px;
+    height: 100%;
+    /* background-color: #9ac742; */
+    background-color: #fe8081;
+    width: 100%;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    overflow: auto;
+}
+
+.studentlist-title {
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.studentlist-table-container {
+    width: 100%;
+    min-height: 380px
+}
+
+.studentlist-table {
+    width: 100%;
+}
+
+.studentlist-table th,
+td {
+    border: 1px solid black;
+}
+
+.studentlist-table tr:hover {
+    background-color: aliceblue;
+}
+
+/* ....................................................................................................... */
+
+.calendar-main {
+    font-family: "Winky Sans", sans-serif;
+    font-size: 10px;
+}
+
+.calendar-main {
+    width: max-content;
+    height: max-content;
+    /* border: 1px solid black; */
+    margin: 5px;
+    text-align: center;
+    padding: 5px;
+}
+
+.calendar-title {
+    display: flex;
+    justify-content: space-between;
+    font-size: 15px;
+}
+
+.calendar-weektitle,
+.calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    justify-content: center;
+    align-items: center;
+}
+
+.calendar-movebn {
+    cursor: pointer;
+}
+
+.calendar-daysDiv {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 20px;
+    width: 20px;
+    margin: 2px;
+}
+
+.present-circle {
+    color: green;
+    font-size: 20px;
+}
+
+.absent-circle {
+    color: red;
+    font-size: 20px;
+}
+
+.studentReport-attendance-text {
+    font-size: 15px;
+}
+
+.present-day {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 20px;
+    width: 20px;
+    margin: 2px;
+}
+
+.absent-day {
+    background-color: red;
+    color: white;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 20px;
+    width: 20px;
+    margin: 2px;
+}
+
+/* ....................................................................................................... */
+
+.studentReport-title {
+    text-align: center;
+    font-size: 25px;
+}
+
+
+.assessmentResult,
+.specialProgramParticipation {
+    width: max-content;
+    height: max-content;
+    background-color: white;
+    margin: 10px;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.assessmentResult {
+    min-height: 240px;
+}
+
+.acedemicRecord {
+    width: 95%;
+    height: max-content;
+    background-color: white;
+    margin: 20px;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.acedemicRecord-title,
+.assessmentResult-title,
+.specialProgramParticipation-title {
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+
+.acedemicRecord-table {
+    width: 30vw;
+}
+
+.specialRecord-table {
+    width: 30vw;
+}
+
+/* .acedemicRecord-table th,
+td { */
+/* border: 1px solid black; */
+/* } */
+
+.acedemicRecord-view {
+    display: flex;
+    justify-content: center;
+}
+
+.acedemicRecord-examlist,
+.acedemicRecord-subjectlist {
+    padding: 15px;
+}
+
+.acedemicRecord-examlist-title,
+.acedemicRecord-subjectlist-title {
+    text-align: center;
+    font-size: 20px;
+    padding: 10px;
+}
+
+
+/* .......................................... */
+
+.studentdash {
+    display: flex;
+    flex-direction: column;
+}
+
+.Container_grid {
+    display: flex;
+    flex-direction: row;
+}
+
+.Container_grid2 {
+    width: 80%;
+}
+
+/* .......................................... */
+
+.studentadd {
+    /* border: 1px solid black; */
+    display: flex;
+    justify-content: center;
+}
+
+.studentadd-personalDiv {
+    /* border: 1px solid black; */
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.3);
+    background-color: #ffcccb;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 20px;
+}
+
+.studentadd-title {
+    font-size: 25px;
+    text-align: center;
+
+}
+
+.studentadd-field {
+    display: flex;
+    justify-content: space-between;
+    width: 600px;
+    margin: 20px;
+}
+
+.studentadd-submitBnDiv {
+    display: flex;
+    justify-content: end;
+    padding: 10px;
+    margin: 10px;
+}
+
+.studentadd-submitBn {
+    /* border: 1px solid black; */
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+    width: 80px;
+    height: 30px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.medical-review {
+    width: 700px;
+}
+
+/* .......................................... */
+
+
+.studentadd-ActionBnContainerDiv {
+    /* border: 1px solid black; */
+    display: flex;
+    justify-content: center;
+}
+
+.studentadd-ActionBnContainer {
+    /* border: 1px solid black; */
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    width: 700px;
+    margin-bottom: 20px;
+    border-radius: 20px;
+}
+
+.studentadd-bns {
+    /* border: 1px solid black; */
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+    background-color: lightblue;
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.studentadd-bns:hover {
+    background-color: rgb(147, 105, 252);
+}
+
+/* .......................................... */
+
+.studentadd-table table {
+    width: 100%;
+}
+
+.studentadd-table th,
+td {
+    border: 1px solid black;
+    padding: 5px;
+}
+
+.studentadd-table td input {
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+#student_bloodgroup {
+    border: 1px solid black;
+}
+
+/* .......................................... */
+
+.studentReport {
+    background-color: #F6FBFE;
+}
+
+/* .......................................... */
+
+.studentdash-topbar {
+    height: 60px;
+    border: 1px solid black;
+    border-radius: 10px;
+    width: 91vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 20px;
+    /* background-color: lightyellow; */
+    background-color: #ffcccb;
+    padding: 10px;
+}
+
+.studentdash-topbar-selectcontainer {
+    /* border: 1px solid black; */
+    display: flex;
+    justify-content: end;
+    padding: 15px;
+}
+
+.studentdash-topbar-selectcontainer select {
+    /* border: 1px solid black; */
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+    padding: 5px;
+    text-align: center;
+    height: 30px;
+    cursor: pointer;
+}
+
+.studentdash-topbar-selectcontainer select:hover {
+    /* border: 2px solid blue; */
+    background-color: #eaede3;
+}
+
+.studentdash-topbar-downloadBn {
+    /* border: 1px solid black; */
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+    padding: 5px;
+    border-radius: 10px;
+    cursor: pointer;
+    height: 30px;
+}
+
+.studentdash-topbar-downloadBn:hover {
+    /* border: 2px solid blue; */
+    background-color: #eaede3;
+}
+
+.studentdash-topbar-downloadBnIcon {
+    width: 20px;
+    height: 20px;
+}
+
+.studentdash-topbar-rightside {
+    display: flex;
+}
+
+.studentdash-topbar-downloadBnDiv {
+    align-items: center;
+    display: flex;
+}
+
+.studentdash-topbar-search {
+    width: 500px;
+    height: 30px;
+    padding-left: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+/* .......................................... */
+
+.filteredexamschedule {
+    /* border: 1px solid black; */
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* .filteredexamschedule-examtable th,
+td {
+    border: 1px solid black;
+} */
+
+.filteredexamschedule-examtable {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: max-content;
+    width: 45vw;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.filteredexamschedule-examtable table {
+    width: 100%;
+}
+
+.filteredexamschedule-examtable-title {
+    font-size: 20px;
+    text-align: center;
+    font-weight: bold;
+    padding: 10px;
+    margin: 10px;
+}
+
+.filteredexamschedule-assessment {
+    width: 90vw;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.filteredexamschedule-assessment-topbar {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 10px;
+    margin: 10px;
+    overflow: auto;
+    flex-wrap: wrap;
+}
+
+.filteredexamschedule-assessment-field {
+    padding: 10px;
+    margin: 10px;
+    padding-bottom: 0;
+}
+
+.examfilters {
+    /* border: 1px solid black; */
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.8);
+    width: 100%;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 20px;
+}
+
+.examfilters-title {
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.exam-list {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 5px;
+    padding: 5px;
+}
+
+.exam-list-Bn {
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3);
+    padding: 5px;
+    border-radius: 10px;
+    cursor: pointer;
+    background-color: linen;
+
+    &:hover {
+        background-color: rgba(219, 127, 244, 0.836);
+    }
+}
+
+.examerrormassage {
+    font-size: 20px;
+}
+
+.assessmenterrormsg {
+    margin-top: 20px;
+    border: 1px solid black;
+    padding: 5px;
+}
+
+/* .......................................... */
+
+.errorBox {
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.8);
+    width: 100%;
+    border-radius: 20px;
+    height: 100px;
+    margin: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.errorBox-massage {
+    font-size: 20px;
+}
+
+/* .......................................... */

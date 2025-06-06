@@ -1,0 +1,113 @@
+.studentreportadd {
+    /* border: 1px solid black; */
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.examlist {
+    padding: 10px;
+    margin: 10px;
+    min-width: 70vw;
+    border: 1px solid black;
+    border-radius: 20px;
+    background-color: lightpink;
+}
+
+.examlist-title {
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.examlist-items {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.examlist-fied {
+    border: 1px solid black;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    margin: 10px;
+    min-width: 40vw;
+}
+
+.examlist-fied-input {
+    background-color: white;
+
+}
+
+.studentReport-betterview {
+    display: flex;
+}
+
+
+/* ....................................................................... */
+/* Exam Report */
+
+.studentreportadd-grade {
+    min-width: 50vw;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 20px;
+    background-color: lightseagreen;
+}
+
+.studentreportadd-grade-field {
+    min-width: 40vw;
+    padding: 10px;
+    margin: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.studentreportadd-grade-field select {
+    border: 1px solid black;
+}
+
+.studentreportadd-grade-title {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    padding: 10px;
+    margin: 10px;
+}
+
+.studentreportadd-grade-BnDiv {
+    display: flex;
+    justify-content: end;
+    min-width: 40vw;
+    padding: 10px;
+    margin: 10px;
+}
+
+.examlist-UploadBn {
+    background-color: white;
+    border-radius: 5px;
+    /* border: 1px solid black; */
+    box-shadow: 0px 2px 4px 0px black;
+    padding: 5px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: violet;
+    }
+}
+
+/* ....................................................................... */
+
+.warning-box {
+    border: 2px solid red;
+    background-color: #ffe6e6;
+    color: #936969;
+    padding: 15px;
+    margin: 20px;
+    border-radius: 5px;
+}
+
+/* ....................................................................... */

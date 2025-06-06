@@ -1,0 +1,94 @@
+.Out-Frame {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+}
+
+.In-Frame {
+    background-color: #FFECB3;
+    border-radius: 16px;
+    /* border: 1px solid; */
+    padding: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.In-Frame input {
+    border: 1px solid;
+    border-radius: 16px;
+    background-color: #FFF8E1;
+    padding-left: 8px;
+}
+
+.fieldDiv {
+    margin: 20px;
+    display: flex;
+    justify-content: space-between;
+    width: 320px;
+}
+
+.login-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 20px;
+}
+
+.rememberDiv {
+    margin: 20px;
+}
+
+.rememberDiv input {
+    margin-right: 8px;
+    cursor: pointer;
+}
+
+.buttonDiv {
+    margin: 20px;
+    justify-content: flex-end;
+    display: flex;
+}
+
+.submitBn {
+    padding: 8px;
+    background-color: #FF7F50;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+/* ................................................. */
+
+.profilepage {
+    padding: 20px;
+    margin: 10px;
+    border-radius: 20px;
+    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.profilepersonal-title {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.profilepersonal-field {
+    display: flex;
+    padding: 10px;
+    margin: 10px;
+    justify-content: space-between;
+    width: 35vw;
+    border-radius: 20px;
+}
+
+.profilepersonal {
+    box-shadow: 0px 1px 2px 0px black;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    margin: 10px;
+    text-align: center;
+}
+
+/* ................................................. */

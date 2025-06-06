@@ -1,0 +1,230 @@
+.attendancepage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.attendancepage-attendancelist {
+    background-color: lightblue;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 30px;
+    padding: 30px;
+    margin: 10px;
+    width: 90vw;
+}
+
+.attendancepage-attendancelist header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.attendancepage-attendancelist-table {
+    width: 100%;
+}
+
+.attendancepage-attendancelist-table table {
+    width: 100%;
+}
+
+.attendancepage-attendancelist-title {
+    font-size: 20px;
+    font-weight: bold;
+    padding: 5px;
+    margin: 5px;
+}
+
+.attendancepage-attendancelist th,
+td {
+    border: 1px solid black;
+
+}
+
+.attendancepage-attendancelist tr:hover {
+    background-color: rgba(255, 255, 255, 0.361);
+    font-weight: bold;
+}
+
+.attendancepage-selectors {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 10px;
+    background-color: lightblue;
+    width: 100%;
+}
+
+.attendancepage-BnLeft{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.attendancepage-bn {
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 5px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.attendancepage-bn:hover {
+    background-color: white;
+}
+
+.selectors-common {
+    border: 1px solid rgba(0, 0, 0, 0.072);
+    padding: 2px;
+    margin: 5px;
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.attendancepage-actionBns {
+    /* border: 1px solid black; */
+    box-shadow: 0px 2px 4px 0px black;
+    border-radius: 10px;
+    padding: 5px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.greenBn {
+    background-color: rgb(144, 238, 144);
+
+    &:hover {
+        background-color: rgba(144, 238, 144, 0.4);
+    }
+}
+
+.redBn {
+    background-color: rgba(255, 0, 0, 0.6);
+    color: white;
+    box-shadow: 0px 2px 4px 0px black;
+    border-radius: 10px;
+    padding: 5px;
+    margin: 5px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: rgba(255, 0, 0, 0.4);
+    }
+}
+
+.normalBn {
+    background-color: lightseagreen;
+    box-shadow: 0px 2px 4px 0px black;
+    border-radius: 10px;
+    padding: 5px;
+    margin: 5px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: rgba(195, 255, 0, 0.4);
+    }
+}
+
+.attendancepage-updateattendance {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    box-shadow: 0px 0.5px 1px 0px black;
+    border-radius: 10px;
+    padding: 5px;
+    margin: 5px;
+    height: max-content;
+    text-align: center;
+    width: 100%;
+}
+
+.attendancepage-updateattendance-field {
+    display: flex;
+    padding: 5px;
+    margin: 5px;
+    justify-content: space-between;
+    align-items: center;
+    overflow: hidden;
+    width: 100%;
+}
+
+.updateattendance-Bn {
+    padding: 5px;
+    margin: 10px;
+    box-shadow: 0px 1px 2px 0px black;
+    border-radius: 10px;
+    background-color: #007BFF;
+    cursor: pointer;
+
+    &:hover {
+        background-color: rgba(255, 0, 0, 0.4);
+    }
+}
+
+.attendancepage-updateattendance-Bns {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.attendancepage-table {
+    width: 100%;
+    text-align: center;
+}
+
+.attendancepage-table table {
+    width: 100%;
+}
+
+.updateattendance-options {
+    border-radius: 10px;
+}
+
+.updateattendance-options input {
+    background-color: #F0F0F0;
+}
+
+.updateattendance-options select {
+    background-color: #F0F0F0;
+}
+
+.attendancepage-updateattendance-title {
+    font-size: 20px;
+    padding: 5px;
+    margin: 10px;
+}
+
+.popmenu {
+    text-align: center;
+    padding: 20px;
+    border: 1px solid black;
+    border-radius: 20px;
+    background-color: white;
+}
+
+.attendancepage-addmenu {
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.nodatatable {
+    font-size: 20px;
+}
+
+.icons {
+    aspect-ratio: 1/1;
+    width: 25px;
+    margin: 0 5px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: rgba(0, 170, 255, 0.4);
+    }
+}

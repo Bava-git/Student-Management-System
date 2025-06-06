@@ -1,0 +1,91 @@
+.teacherDiv {
+    background-color: lightcyan;
+    height: 100dvh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.addteacherDiv {
+    background-color: #6f8eec;
+    width: 600px;
+    height: max-content;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 20px;
+    border: 1px solid black;
+    /* display: none; */
+}
+
+.addteacher-title {
+    text-align: center;
+    font-weight: bold;
+    font-size: 20px;
+    margin: 15px;
+}
+
+.addteacher-field {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
+}
+
+.addteacher-field input {
+    background-color: white;
+}
+
+.addteacher-field select {
+    background-color: white;
+}
+
+.addteacher-bnDiv {
+    display: flex;
+    justify-content: end;
+}
+
+.addteacher-Bn {
+    width: 60px;
+    height: 30px;
+    border: 1px solid black;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.Error-Message {
+    display: flex;
+    justify-content: end;
+    position: relative; 
+    top: -25px;
+    color: red;
+}
+
+
+/* ...................................................................... */
+
+.teacherlistDiv {
+    background-color: lightskyblue;
+    height: max-content;
+    margin: 20px;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.teacherlistDiv-title {
+    text-align: center;
+    margin: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.teacherlisttable {
+    width: 100%;
+}
+
+.teacherlisttable th,
+td {
+    border: 1px solid black;
+    width: max-content;
+    text-align: center;
+}
