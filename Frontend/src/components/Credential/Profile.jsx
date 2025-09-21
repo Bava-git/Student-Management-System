@@ -4,7 +4,7 @@ import * as ApiHub from '../../utilities/ApiHub';
 const StudentProfile = () => {
 
     const [Student, setStudent] = useState({});
-    const userId = localStorage.getItem("Id");
+    const userId = sessionStorage.getItem("Id");
 
     useEffect(() => {
         ApiHub.GetOneById("student/search", userId).then((data) => {
@@ -52,7 +52,7 @@ const StudentProfile = () => {
 const TeacherProfile = () => {
 
     const [Teacher, setTeacher] = useState({});
-    const userId = localStorage.getItem("Id");
+    const userId = sessionStorage.getItem("Id");
 
     useEffect(() => {
         ApiHub.GetOneById("teacher/search", userId).then((data) => {

@@ -217,18 +217,20 @@ const UpcomingAssessments = () => {
     }
 
     return (
-        <div className="filteredexamschedule-assessment">
-            <h1 className='filteredexamschedule-examtable-title'>Assessment Task</h1>
-            <div className="filteredexamschedule-assessment-topbar">
-                <div className="filteredexamschedule-assessment-field">
-                    <p className='assessment-subtitle active'>Active Assessment</p>
-                    {ActiveDataShow.length != 0 ? (ActiveDataShow) :
-                        (<p className='assessmenterrormsg'>Assessment are not yet scheduled</p>)}
-                </div>
-                <div className="filteredexamschedule-assessment-field">
-                    <p className='assessment-subtitle pending'>Result Pending</p>
-                    {ResultPendingShow.length != 0 ? (ResultPendingShow) :
-                        (<p className='assessmenterrormsg'>No Assessment submitted</p>)}
+        <div className='filteredexamschedule'>
+            <div className="filteredexamschedule-assessment">
+                <h1 className='filteredexamschedule-examtable-title'>Assessment Task</h1>
+                <div className="filteredexamschedule-assessment-topbar">
+                    <div className="filteredexamschedule-assessment-field">
+                        <p className='assessment-subtitle active'>Active Assessment</p>
+                        {ActiveDataShow.length != 0 ? (ActiveDataShow) :
+                            (<p className='assessmenterrormsg'>Assessment are not yet scheduled</p>)}
+                    </div>
+                    <div className="filteredexamschedule-assessment-field">
+                        <p className='assessment-subtitle pending'>Result Pending</p>
+                        {ResultPendingShow.length != 0 ? (ResultPendingShow) :
+                            (<p className='assessmenterrormsg'>No Assessment submitted</p>)}
+                    </div>
                 </div>
             </div>
         </div>

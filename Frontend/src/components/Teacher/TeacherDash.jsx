@@ -219,7 +219,7 @@ const TeacherList = () => {
   return (
     <div className="teacherlistDiv">
       <h3 className="teacherlistDiv-title">Teacher List</h3>
-      <table className="teacherlisttable" border="1">
+      <table className="teacherlisttable">
         <thead>
           <tr>
             <th>ID</th>

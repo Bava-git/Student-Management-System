@@ -54,7 +54,7 @@
 .Error-Message {
     display: flex;
     justify-content: end;
-    position: relative; 
+    position: relative;
     top: -25px;
     color: red;
 }
@@ -85,7 +85,6 @@
 
 .teacherlisttable th,
 td {
-    border: 1px solid black;
     width: max-content;
     text-align: center;
 }

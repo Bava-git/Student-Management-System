@@ -1,85 +1,67 @@
 @import url('https://fonts.googleapis.com/css2?family=Winky+Sans:ital,wght@0,300..900;1,300..900&display=swap');
 
 .studentReport-attendance {
-    width: max-content;
-    min-height: 240px;
-    background-color: white;
-    box-shadow: 0 2px 6px 0 #192e4c14;
+    width: 100%;
+    min-height: 300px;
+    /* background-color: white; */
     margin: 10px;
     border-radius: 10px;
     padding: 15px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 .studentReport-attendance-calendarview {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    height: 15rem;
 }
 
 .studentReport-attendance-title {
     padding: 10px;
-    font-size: 20px;
+    font-size: 1.5em;
     text-align: center;
 }
 
 .standardlist {
-    width: max-content;
-    height: max-content;
-    background-color: #fe8081;
-    border-radius: 10px;
-    margin: 20px;
-    padding: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
-}
-
-.standardlist-section {
-    /* margin-left: 30px; */
-    margin: 5px;
-    padding: 0px 10px;
-}
-
-.standardlist-section a:hover {
-    background-color: #eaede3;
-
+    padding: 0.5em;
+    display: flex;
 }
 
 .studentlist {
-    margin: 20px;
+    margin: 10px;
+    padding: 10px;
     border-radius: 10px;
-    padding: 20px;
     height: 100%;
-    /* background-color: #9ac742; */
-    background-color: #fe8081;
     width: 100%;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
     overflow: auto;
 }
 
 .studentlist-title {
-    text-align: center;
-    font-size: 20px;
+    text-align: start;
+    font-size: 1.2em;
     font-weight: bold;
     margin-bottom: 15px;
 }
 
-.studentlist-table-container {
+.studentlist-TableContainer {
     width: 100%;
     min-height: 380px
 }
 
-.studentlist-table {
+.studentlist-TableContainer table {
     width: 100%;
+    font-size: 1em;
 }
 
-.studentlist-table th,
-td {
-    border: 1px solid black;
+.studentlist-TableContainer tbody tr:hover {
+    background-color: lightsalmon;
 }
 
-.studentlist-table tr:hover {
-    background-color: aliceblue;
+.studentlist-TableContainer tr {
+    border: 1px solid #333 !important;
 }
+
 
 /* ....................................................................................................... */
 
@@ -89,9 +71,8 @@ td {
 }
 
 .calendar-main {
-    width: max-content;
+    width: 20rem;
     height: max-content;
-    /* border: 1px solid black; */
     margin: 5px;
     text-align: center;
     padding: 5px;
@@ -132,8 +113,14 @@ td {
     font-size: 20px;
 }
 
+.studentReport-attendance-textDiv {
+    width: 100%;
+    padding: 1rem;
+}
+
 .studentReport-attendance-text {
     font-size: 15px;
+    border-top: 1px solid lightblue;
 }
 
 .present-day {
@@ -155,20 +142,20 @@ td {
 /* ....................................................................................................... */
 
 .studentReport-title {
-    text-align: center;
+    text-align: start;
     font-size: 25px;
+    font-weight: 600;
 }
 
 
 .assessmentResult,
 .specialProgramParticipation {
-    width: max-content;
+    width: 100%;
     height: max-content;
-    background-color: white;
+    /* background-color: white; */
     margin: 10px;
     border-radius: 10px;
     padding: 15px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 .assessmentResult {
@@ -178,48 +165,48 @@ td {
 .acedemicRecord {
     width: 95%;
     height: max-content;
-    background-color: white;
+    /* background-color: white; */
     margin: 20px;
     border-radius: 10px;
     padding: 15px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 .acedemicRecord-title,
 .assessmentResult-title,
 .specialProgramParticipation-title {
-    text-align: center;
+    text-align: start;
     margin-bottom: 10px;
     font-size: 20px;
 }
 
 .acedemicRecord-table {
-    width: 30vw;
+    width: 100%;
 }
 
-.specialRecord-table {
-    width: 30vw;
+.acedemicRecord-table table {
+    width: 100%;
 }
 
-/* .acedemicRecord-table th,
-td { */
-/* border: 1px solid black; */
-/* } */
+.acedemicRecord-table table,
+th,
+td {
+    border: none;
+}
 
 .acedemicRecord-view {
     display: flex;
-    justify-content: center;
 }
 
 .acedemicRecord-examlist,
 .acedemicRecord-subjectlist {
     padding: 15px;
+    width: 100%;
 }
 
 .acedemicRecord-examlist-title,
 .acedemicRecord-subjectlist-title {
-    text-align: center;
-    font-size: 20px;
+    text-align: start;
+    font-size: 1em;
     padding: 10px;
 }
 
@@ -237,21 +224,18 @@ td { */
 }
 
 .Container_grid2 {
-    width: 80%;
+    width: 97%;
 }
 
 /* .......................................... */
 
 .studentadd {
-    /* border: 1px solid black; */
     display: flex;
     justify-content: center;
 }
 
 .studentadd-personalDiv {
-    /* border: 1px solid black; */
     box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.3);
-    background-color: #ffcccb;
     padding: 20px;
     margin: 20px;
     border-radius: 20px;
@@ -278,7 +262,6 @@ td { */
 }
 
 .studentadd-submitBn {
-    /* border: 1px solid black; */
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
     width: 80px;
     height: 30px;
@@ -294,13 +277,11 @@ td { */
 
 
 .studentadd-ActionBnContainerDiv {
-    /* border: 1px solid black; */
     display: flex;
     justify-content: center;
 }
 
 .studentadd-ActionBnContainer {
-    /* border: 1px solid black; */
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
     display: flex;
     justify-content: space-between;
@@ -311,7 +292,6 @@ td { */
 }
 
 .studentadd-bns {
-    /* border: 1px solid black; */
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
     background-color: lightblue;
     padding: 5px;
@@ -331,7 +311,7 @@ td { */
 
 .studentadd-table th,
 td {
-    border: 1px solid black;
+    /* border: 1px solid black; */
     padding: 5px;
 }
 
@@ -349,58 +329,73 @@ td {
 
 .studentReport {
     background-color: #F6FBFE;
+    padding: 2rem;
 }
 
 /* .......................................... */
 
 .studentdash-topbar {
-    height: 60px;
-    border: 1px solid black;
     border-radius: 10px;
-    width: 91vw;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
     margin: 0 20px;
-    /* background-color: lightyellow; */
-    background-color: #ffcccb;
     padding: 10px;
 }
 
-.studentdash-topbar-selectcontainer {
-    /* border: 1px solid black; */
-    display: flex;
-    justify-content: end;
-    padding: 15px;
-}
-
-.studentdash-topbar-selectcontainer select {
-    /* border: 1px solid black; */
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
-    border-radius: 5px;
-    padding: 5px;
-    text-align: center;
-    height: 30px;
+.standardlist-section {
+    padding: 0.5rem;
     cursor: pointer;
+    border-bottom: 1px solid #d77b78;
+    font-size: 0.85em;
+
+    &:hover {
+        background-color: #d77b78;
+        border-radius: 1rem;
+    }
 }
 
-.studentdash-topbar-selectcontainer select:hover {
-    /* border: 2px solid blue; */
-    background-color: #eaede3;
+.standardlist-section.active {
+    background-color: #d77b78;
+    border-radius: 1rem;
 }
+
+.studentdash-topbar-ExamSelector {
+    display: flex;
+    padding: 0.5rem;
+}
+
+.studentdash-topbar-ExamSelector button {
+    padding: 0.5rem;
+    cursor: pointer;
+    border-bottom: 1px solid #d77b78;
+    font-size: 0.85em;
+
+    &:hover {
+        background-color: #d77b78;
+        border-radius: 1rem;
+    }
+}
+
+.studentdash-topbar-ExamSelector button.active {
+    background-color: #d77b78;
+    border-radius: 1rem;
+}
+
 
 .studentdash-topbar-downloadBn {
-    /* border: 1px solid black; */
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
-    padding: 5px;
+    padding: 10px;
     border-radius: 10px;
     cursor: pointer;
     height: 30px;
-}
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    top: 80px;
 
-.studentdash-topbar-downloadBn:hover {
-    /* border: 2px solid blue; */
-    background-color: #eaede3;
+    &:hover {
+        background-color: lightsalmon;
+    }
 }
 
 .studentdash-topbar-downloadBnIcon {
@@ -410,6 +405,8 @@ td {
 
 .studentdash-topbar-rightside {
     display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .studentdash-topbar-downloadBnDiv {
@@ -417,35 +414,33 @@ td {
     display: flex;
 }
 
-.studentdash-topbar-search {
-    width: 500px;
-    height: 30px;
-    padding-left: 20px;
-    border: 1px solid rgba(0, 0, 0, 0.2);
+.studentdash-searchDiv {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.studentdash-EndSide {
+    display: flex;
+    border-bottom: 2px solid #d77b78;
 }
 
 /* .......................................... */
 
 .filteredexamschedule {
-    /* border: 1px solid black; */
     display: flex;
     flex-direction: row;
     justify-content: center;
     flex-wrap: wrap;
 }
 
-/* .filteredexamschedule-examtable th,
-td {
-    border: 1px solid black;
-} */
-
 .filteredexamschedule-examtable {
     display: flex;
     flex-direction: column;
     align-items: center;
     height: max-content;
-    width: 45vw;
-    padding: 10px;
+    width: 100%;
+    padding: 30px;
     margin: 10px;
     border-radius: 20px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
@@ -457,14 +452,14 @@ td {
 
 .filteredexamschedule-examtable-title {
     font-size: 20px;
-    text-align: center;
+    text-align: start;
     font-weight: bold;
     padding: 10px;
     margin: 10px;
 }
 
 .filteredexamschedule-assessment {
-    width: 90vw;
+    width: 100%;
     padding: 10px;
     margin: 10px;
     border-radius: 20px;
@@ -474,10 +469,12 @@ td {
 .filteredexamschedule-assessment-topbar {
     display: flex;
     justify-content: space-evenly;
+    flex-direction: column;
     padding: 10px;
     margin: 10px;
     overflow: auto;
     flex-wrap: wrap;
+    width: 100%;
 }
 
 .filteredexamschedule-assessment-field {
@@ -487,8 +484,7 @@ td {
 }
 
 .examfilters {
-    /* border: 1px solid black; */
-    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.8);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
     width: 100%;
     margin: 10px;
     padding: 10px;
@@ -514,10 +510,10 @@ td {
     padding: 5px;
     border-radius: 10px;
     cursor: pointer;
-    background-color: linen;
+    background-color: var(--blue-button-colour);
 
     &:hover {
-        background-color: rgba(219, 127, 244, 0.836);
+        background-color: var(--blue-button-hovercolour);
     }
 }
 

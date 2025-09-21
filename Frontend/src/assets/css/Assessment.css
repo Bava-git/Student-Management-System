@@ -1,10 +1,8 @@
 .assessmentDetails-div {
     border-radius: 20px;
-    margin: 15px;
+    margin: 15px 5px;
     padding: 10px;
     box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.3);
-    /* height: 100px; */
-    width: 400px;
 }
 
 .assessmentDetails-field {
@@ -22,6 +20,7 @@
 .remainingtimeicon {
     aspect-ratio: 1/1;
     width: 25px;
+    margin-left: 0.5rem;
 }
 
 .deliverytime {
@@ -41,7 +40,7 @@
 }
 
 .assessment-subtitle {
-    text-align: center;
+    text-align: start;
 }
 
 .assessmentDetails-Bn {
@@ -49,12 +48,12 @@
     margin: 10px;
     box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.3);
     border-radius: 10px;
-    background-color: rgb(52, 140, 254);
     color: white;
     cursor: pointer;
+    background-color: var(--blue-button-colour);
 
     &:hover {
-        background-color: rgba(52, 59, 254, 0.534);
+        background-color: var(--blue-button-hovercolour);
     }
 }
 
@@ -63,11 +62,10 @@
     margin: 5px;
     box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.3);
     border-radius: 10px;
-    background-color: rgb(52, 140, 254);
-    color: white;
     cursor: pointer;
+    background-color: var(--blue-button-colour);
 
     &:hover {
-        background-color: rgba(52, 59, 254, 0.534);
+        background-color: var(--blue-button-hovercolour);
     }
 }

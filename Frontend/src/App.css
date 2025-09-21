@@ -1,12 +1,22 @@
-   @layer base {
        * {
            padding: 0;
            margin: 0;
            box-sizing: border-box;
        }
-   }
 
-   body {
-       margin-left: 50px;
-       margin-top: 60px;
-   }
+       body {
+           margin-left: 50px;
+           margin-top: 60px;
+       }
+
+       :root {
+           --blue-button-colour: lightblue;
+           --blue-button-hovercolour: rgb(130, 167, 179);
+           --button-secord-colour: rgb(52, 140, 254);
+           --button-secord-hovercolour: rgba(52, 59, 254, 0.534);
+       }
+
+       tr {
+           border: 1px solid lightblue;
+           font-size: 0.8em;
+       }

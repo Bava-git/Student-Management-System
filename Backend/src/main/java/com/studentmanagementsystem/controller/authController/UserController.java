@@ -6,6 +6,7 @@ import com.studentmanagementsystem.model.auth.Role;
 import com.studentmanagementsystem.model.auth.User;
 import com.studentmanagementsystem.repository.authService.RoleRepository;
 import com.studentmanagementsystem.repository.authService.UserRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,10 +16,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -157,6 +155,23 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.OK).body("Temp password generated successfully");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error changing password");
+        }
+    }
+
+    @GetMapping("/validaterole")
+    public ResponseEntity<?> roleChecker(HttpServletRequest request) {
+        try {
+            String authHeader = request.getHeader("Authorization");
+            System.out.println("From validator token: " + authHeader);
+            String role = null;
+            if (authHeader != null && authHeader.startsWith("Bearer ")) {
+                String token = authHeader.substring(7);
+                role = jwtUtil.extractRoles(token);
+                return ResponseEntity.ok(Map.of("role", role));
+            }
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("ROLE_INVALID");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in role");
         }
     }
 }

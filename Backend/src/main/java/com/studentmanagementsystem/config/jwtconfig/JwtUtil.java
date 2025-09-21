@@ -59,13 +59,17 @@ public class JwtUtil {
 
     }
 
-    public List<String> extractRoles(String token) {
-        return (List<String>) Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token).getBody().get("roles");
+    public String extractRoles(String token) {
+        Claims claims = Jwts.parserBuilder().setSigningKey(SECRET).build().parseClaimsJws(token).getBody();
+        List<String> roles = (List<String>) claims.get("roles");
+        String role = roles.get(0);
+//        System.out.println(role);
+        return role;
     }
 
     public boolean validateToken(String token, UserDetails userDetails) {
         boolean isValid = extractUsername(token).equals(userDetails.getUsername());
-        System.out.println("token is valid : " + isValid);
+//        System.out.println("token is valid : " + isValid);
         return isValid;
     }
 

@@ -34,7 +34,7 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults())
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/user/register", "/user/unblock", "/user/temppassword").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers("/user/register", "/user/unblock", "/user/temppassword", "/user/validaterole").hasAuthority("ROLE_ADMIN")
                         .requestMatchers("/student/search/**", "/teacher/search/**", "/school/examschedule")
                         .hasAnyAuthority("ROLE_ADMIN", "ROLE_TEACHER", "ROLE_STUDENT")
                         .requestMatchers("/user/changepassword").hasAnyAuthority("ROLE_ADMIN", "ROLE_TEACHER", "ROLE_STUDENT")

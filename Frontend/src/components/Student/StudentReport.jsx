@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Navigate, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import * as ApiHub from '../../utilities/ApiHub';
 import * as importData from '../../utilities/DataMembers';
 
@@ -34,46 +34,56 @@ const StudentReportUpload = () => {
     return (
         <div className="studentreportadd">
             <div className='studentreportadd-grade'>
-                <h1 className='studentreportadd-grade-title'>Exam Result</h1>
+                <h1 className='studentreportadd-grade-title'>Upload Exam Results</h1>
                 <div className="warning-box">
-                    <h2><strong>&#9888; CSV Upload Warning &#9888;</strong></h2>
-                    <p>Please ensure your CSV file is correctly formatted before uploading. The file <strong>must</strong> adhere to the following structure:</p>
-                    <ol type="1">
-                        <li><strong>Student Grade</strong></li>
-                        <li><strong>Student ID</strong></li>
-                        <li><strong>Tamil Mark</strong></li>
-                        <li><strong>English Mark</strong></li>
-                        <li><strong>Maths Mark</strong></li>
-                        <li><strong>Science Mark</strong></li>
-                        <li><strong>Social Mark</strong></li>
-                    </ol>
-                    <p>✔ The file <strong>must NOT</strong> contain headers (titles) for each column.</p>
-                    <p>✔ Data must be entered in the correct order to avoid errors during processing.</p>
-                    <p>✔ Ensure no empty rows or missing values to maintain accuracy.</p>
-                    <p>&#10060; <strong>Incorrect formatting may result in upload failure or data misalignment.</strong></p>
+                    <h2><strong> CSV Upload Warning </strong></h2>
+                    <p>Please ensure your CSV file is correctly formatted before uploading.</p>
+                    <div className="warning-Checkboxs">
+                        <input type="checkbox" />
+                        <p>CSV should not contain headers</p>
+                    </div>
+                    <div className="warning-Checkboxs">
+                        <input type="checkbox" />
+                        <p> CSV should contain the following columns in order: Student Grade, Student ID, Tamil Mark,
+                            English Mark, Maths Mark, Science Mark, Social Mark</p>
+                    </div>
+                    <div className="warning-Checkboxs">
+                        <input type="checkbox" />
+                        <p>CSV should not contain empty rows</p>
+                    </div>
+                    <div className="warning-Checkboxs">
+                        <input type="checkbox" />
+                        <p>Ensure all data is accurate before uploading</p>
+                    </div>
                 </div>
-                <div className='studentreportadd-grade-field'>
-                    <label htmlFor="grade">Grade:</label>
-                    <select name="grade" id="grade" onChange={(e) => { setGrade(e.target.value) }} defaultValue={""}>
-                        <option value="">-- Choose a grade --</option>
-                        {importData.grades.map((grade) => (
-                            <option key={grade} value={grade}>{grade}</option>
-                        ))}
-                    </select>
+                <div className="grade-container">
+                    <label className="grade-label" htmlFor="grade">
+                        <p className="grade-title">Grade</p>
+                        <select className="grade-select" name="grade" id="grade"
+                            onChange={(e) => { setGrade(e.target.value) }} defaultValue={""}>
+                            <option value="">Select Grade</option>
+                            {importData.grades.map((grade) => (
+                                <option key={grade} value={grade}>{grade}</option>
+                            ))}
+                        </select>
+                    </label>
                 </div>
-                <div className='studentreportadd-grade-field'>
-                    <label htmlFor="exam">Exam:</label>
-                    <select name="exam" id="exam" onChange={(e) => { setExamName(e.target.value) }} defaultValue={""}>
-                        <option value="">-- Choose a exam --</option>
-                        {importData.exams.map((exam) => (
-                            <option key={exam} value={exam.trim().toLowerCase()}>{exam}</option>
-                        ))}
-                        <option key={"Assessment"} value={"assessment"}>Assessment</option>
-                    </select>
+                <div className="grade-container">
+                    <label className="grade-label" htmlFor="exam">
+                        <p className="grade-title">Grade</p>
+                        <select className="grade-select" name="exam" id="exam"
+                            onChange={(e) => { setExamName(e.target.value) }} defaultValue={""}>
+                            <option value="">Select Exam</option>
+                            {importData.exams.map((exam) => (
+                                <option key={exam} value={exam.trim().toLowerCase()}>{exam}</option>
+                            ))}
+                            <option key={"Assessment"} value={"assessment"}>Assessment</option>
+                        </select>
+                    </label>
                 </div>
-                <div className='studentreportadd-grade-field'>
-                    <label htmlFor="file">Upload file:</label>
-                    <input type="file" id="file" name='file' onChange={handleFileChange} />
+                <div className='grade-container'>
+                    <label htmlFor="file" className="grade-label">Upload file:</label>
+                    <input type="file" id="file" name='file' className="grade-select" onChange={handleFileChange} />
                 </div>
                 <div className='studentreportadd-grade-BnDiv'>
                     <button className='examlist-UploadBn' onClick={handleSubmit}>Upload</button>
@@ -106,11 +116,13 @@ const StudentReportView = () => {
 
     const fetchData = async () => {
 
-        if (Student_ID != sessionStorage.getItem("Id")) {
+        let role = sessionStorage.getItem("role");
+
+        if ((role === "ROLE_STUDENT") && (Student_ID != sessionStorage.getItem("Id"))) {
             toast.error('Warning: Unauthorized Attempt Detected',
                 {
                     description: 'This system automatically reports illegal approaches to management. Do not attempt again.',
-                    duration: 60000
+                    duration: 50000
                 },);
             Navigate(`/`);
             return;
@@ -233,110 +245,120 @@ const StudentReportView = () => {
         })
     }
 
+    const handlePerformanceCategories = (score) => {
+        if (score >= 450) return 'Excellent';
+        if (score >= 400) return 'Very Good';
+        if (score >= 350) return 'Good';
+        if (score >= 300) return 'Average';
+        return 'Needs Improvement';
+    }
+
     return (
         <div className="studentReport">
             <h1 className="studentReport-title">Student Report - {Student_ID}</h1>
             <div className="acedemicRecord">
-                <p className="acedemicRecord-title">Acedemic Records</p>
                 <div className="acedemicRecord-view">
                     <div className="acedemicRecord-examlist">
-                        <p className="acedemicRecord-examlist-title">Exam List</p>
-                        <table className="acedemicRecord-table">
-                            <thead>
-                                <tr>
-                                    <th>S.No</th>
-                                    <th>Exam</th>
-                                    <th>Mark</th>
-                                    <th>Result</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td><a href="#" data-value={0} onClick={handletable}>Mid Term l</a></td>
-                                    <td>{TotalArr[0]}/500</td>
-                                    <td>{TotalArr[0] >= 175 ? "Pass" : "Fail"}</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td><a href="#" data-value={3} onClick={handletable}>Quarterly (Term l)</a></td>
-                                    <td>{TotalArr[1]}/500</td>
-                                    <td>{TotalArr[1] >= 175 ? "Pass" : "Fail"}</td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td><a href="#" data-value={1} onClick={handletable}>Mid Term ll</a></td>
-                                    <td>{TotalArr[2]}/500</td>
-                                    <td>{TotalArr[2] >= 175 ? "Pass" : "Fail"}</td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td><a href="#" data-value={4} onClick={handletable}>Half Yearly (Term ll)</a></td>
-                                    <td>{TotalArr[3]}/500</td>
-                                    <td>{TotalArr[3] >= 175 ? "Pass" : "Fail"}</td>
-                                </tr>
-                                <tr>
-                                    <td>5</td>
-                                    <td><a href="#" data-value={2} onClick={handletable}>Mid Term lll</a></td>
-                                    <td>{TotalArr[4]}/500</td>
-                                    <td>{TotalArr[4] >= 175 ? "Pass" : "Fail"}</td>
-                                </tr>
-                                <tr>
-                                    <td>6</td>
-                                    <td><a href="#" data-value={5} onClick={handletable}>Annual (Term lll)</a></td>
-                                    <td>{TotalArr[5]}/500</td>
-                                    <td>{TotalArr[5] >= 175 ? "Pass" : "Fail"}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    {Visibility &&
-                        <div className="acedemicRecord-subjectlist">
-                            <p className="acedemicRecord-subjectlist-title">{ExamName} - Subject List</p>
-                            <table className="acedemicRecord-table" >
+                        <p className="acedemicRecord-examlist-title">Acedemic Records</p>
+                        <div className="acedemicRecord-table">
+                            <table>
                                 <thead>
                                     <tr>
                                         <th>S.No</th>
-                                        <th>Subject</th>
+                                        <th>Exam</th>
                                         <th>Mark</th>
                                         <th>Result</th>
                                     </tr>
                                 </thead>
-                                <tbody></tbody>
-                                <tfoot>
+                                <tbody>
                                     <tr>
                                         <td>1</td>
-                                        <td>Tamil</td>
-                                        <td>{SubjectPerArr[0]}/100</td>
-                                        <td>{SubjectPerArr[0] > 34 ? "Pass" : "Fail"}</td>
+                                        <td><a href="#" data-value={0} onClick={handletable}>Mid Term l</a></td>
+                                        <td>{TotalArr[0]}/500</td>
+                                        <td>{handlePerformanceCategories(TotalArr[0])}</td>
                                     </tr>
                                     <tr>
                                         <td>2</td>
-                                        <td>English</td>
-                                        <td>{SubjectPerArr[1]}/100</td>
-                                        <td>{SubjectPerArr[1] > 34 ? "Pass" : "Fail"}</td>
+                                        <td><a href="#" data-value={3} onClick={handletable}>Quarterly (Term l)</a></td>
+                                        <td>{TotalArr[1]}/500</td>
+                                        <td>{handlePerformanceCategories(TotalArr[1])}</td>
                                     </tr>
                                     <tr>
                                         <td>3</td>
-                                        <td>Maths</td>
-                                        <td>{SubjectPerArr[2]}/100</td>
-                                        <td>{SubjectPerArr[2] > 34 ? "Pass" : "Fail"}</td>
+                                        <td><a href="#" data-value={1} onClick={handletable}>Mid Term ll</a></td>
+                                        <td>{TotalArr[2]}/500</td>
+                                        <td>{handlePerformanceCategories(TotalArr[2])}</td>
                                     </tr>
                                     <tr>
                                         <td>4</td>
-                                        <td>Science</td>
-                                        <td>{SubjectPerArr[3]}/100</td>
-                                        <td>{SubjectPerArr[3] > 34 ? "Pass" : "Fail"}</td>
+                                        <td><a href="#" data-value={4} onClick={handletable}>Half Yearly (Term ll)</a></td>
+                                        <td>{TotalArr[3]}/500</td>
+                                        <td>{handlePerformanceCategories(TotalArr[3])}</td>
                                     </tr>
                                     <tr>
                                         <td>5</td>
-                                        <td>Social Science</td>
-                                        <td>{SubjectPerArr[4]}/100</td>
-                                        <td>{SubjectPerArr[4] > 34 ? "Pass" : "Fail"}</td>
+                                        <td><a href="#" data-value={2} onClick={handletable}>Mid Term lll</a></td>
+                                        <td>{TotalArr[4]}/500</td>
+                                        <td>{handlePerformanceCategories(TotalArr[4])}</td>
                                     </tr>
-                                </tfoot>
+                                    <tr>
+                                        <td>6</td>
+                                        <td><a href="#" data-value={5} onClick={handletable}>Annual (Term lll)</a></td>
+                                        <td>{TotalArr[5]}/500</td>
+                                        <td>{handlePerformanceCategories(TotalArr[5])}</td>
+                                    </tr>
+                                </tbody>
                             </table>
-                        </div>}
+                        </div>
+                        <div className="acedemicRecord-subjectlist">
+                            <p className="acedemicRecord-subjectlist-title">{ExamName} - Subject List</p>
+                            <div className="acedemicRecord-table">
+                                <table >
+                                    <thead>
+                                        <tr>
+                                            <th>S.No</th>
+                                            <th>Subject</th>
+                                            <th>Mark</th>
+                                            <th>Result</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>Tamil</td>
+                                            <td>{SubjectPerArr[0]}/100</td>
+                                            <td>{SubjectPerArr[0] > 34 ? "Pass" : "Fail"}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>2</td>
+                                            <td>English</td>
+                                            <td>{SubjectPerArr[1]}/100</td>
+                                            <td>{SubjectPerArr[1] > 34 ? "Pass" : "Fail"}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>3</td>
+                                            <td>Maths</td>
+                                            <td>{SubjectPerArr[2]}/100</td>
+                                            <td>{SubjectPerArr[2] > 34 ? "Pass" : "Fail"}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>4</td>
+                                            <td>Science</td>
+                                            <td>{SubjectPerArr[3]}/100</td>
+                                            <td>{SubjectPerArr[3] > 34 ? "Pass" : "Fail"}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>5</td>
+                                            <td>Social Science</td>
+                                            <td>{SubjectPerArr[4]}/100</td>
+                                            <td>{SubjectPerArr[4] > 34 ? "Pass" : "Fail"}</td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div className="studentReport-betterview">
@@ -398,7 +420,7 @@ const StudentReportView = () => {
                     </table>
                 </div>
             </div>
-        </div>
+        </div >
     )
 }
 

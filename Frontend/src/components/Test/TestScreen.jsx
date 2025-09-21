@@ -1,49 +1,32 @@
 import { useState } from 'react';
+import axios from 'axios';
 
 
 import { Menu, MenuButton, MenuItem, SubMenu } from '@szhsin/react-menu';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
+import { Navigate } from 'react-router-dom';
 
 const Test = () => {
     const [isPresent, setisPresent] = useState(false);
 
+    const handleClick = async () => {
+        try {
+            const res = await axios.get("user/validaterole", {
+                headers: {
+                    Authorization: "Bearer " + sessionStorage.getItem("authtoken"),
+                }
+            });
+            console.log(res); // You can access the actual role here
+        } catch (error) {
+            console.error("Role validation failed:", error.response?.data || error.message);
+        }
+
+    }
 
     return (
         <>
-
-            <Popup trigger={<button className="border rounded-sm m-5 p-5"> Open Popup </button>} position="right center">
-                <div>Popup content here!</div>
-            </Popup>
-
-            <Menu menuButton={<MenuButton> Open Menu </MenuButton>}>
-                <MenuItem className="menu"> New File </MenuItem>
-                <MenuItem> Save </MenuItem>
-                <SubMenu label="Edit">
-                    <MenuItem> Cut </MenuItem>
-                    <MenuItem onClick={() => console.log("Copy")}> Copy </MenuItem>
-                    <MenuItem onClick={() => console.log("Paste")}> Paste </MenuItem>
-                </SubMenu>
-                <MenuItem> Print... </MenuItem>
-            </Menu>
-
-            <details>
-                <summary>Hello</summary>
-                <table>
-                    <thead>
-                        <tr>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td></td>
-                        </tr>
-                    </tbody>
-                    <tfoot></tfoot>
-                </table>
-            </details>
-
+            <button onClick={() => { handleClick() }}>Test</button>
         </>
     )
 }

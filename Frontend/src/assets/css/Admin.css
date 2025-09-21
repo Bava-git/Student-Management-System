@@ -4,7 +4,7 @@
 }
 
 .listofusers {
-    /* border: 1px solid black; */
+
     width: 50%;
     height: max-content;
     padding: 10px;
@@ -29,7 +29,7 @@
 }
 
 .listofusers-table {
-    /* border: 1px solid black; */
+
     padding: 10px;
     margin: 10px;
     border-radius: 10px;
@@ -41,7 +41,7 @@
 
 .listofusers-table th,
 td {
-    border: 1px solid black;
+    /* border: 1px solid black; */
 }
 
 .listofusers-searchbar select {
@@ -83,14 +83,14 @@ td {
 .actionside-Controllers {
     padding: 10px;
     margin: 10px;
-    /* border: 1px solid black; */
+
     border-radius: 20px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 .actionside-button {
     padding: 5px;
-    /* border: 1px solid black; */
+
     border-radius: 10px;
     cursor: pointer;
     margin: 5px;
@@ -112,7 +112,7 @@ td {
 }
 
 .actionside-roleDiv select {
-    border: 1px solid black;
+     border: 1px solid black; 
 }
 
 .actionside-buttonDiv {
@@ -121,7 +121,7 @@ td {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    /* border: 1px solid black; */
+
 }
 
 .listofusers-table-selectorDiv {
@@ -132,7 +132,7 @@ td {
 }
 
 .listofusers-table-selector {
-    border: 1px solid black;
+     border: 1px solid black; 
 
 }
 

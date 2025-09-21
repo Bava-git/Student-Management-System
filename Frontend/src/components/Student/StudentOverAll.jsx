@@ -10,10 +10,34 @@ const StudentOverAllView = () => {
   const [Key, setKey] = useState([]);
   const [MarkSheet, setMarkSheet] = useState([]);
   const [WhichToShow, setWhichToShow] = useState('');
+  const ListOfExam = new Map(new Map([
+    ['Personal Details', 'Personal Details'],
+    ['midterm1', 'Mid Term l'],
+    ['midterm2', 'Mid Term ll'],
+    ['midterm3', 'Mid Term lll'],
+    ['quarterly', 'Quarterly'],
+    ['halfyearly', 'Half Yearly'],
+    ['annual', 'Annual']
+  ]));
+  const [ExamIndex, setExamIndex] = useState("Personal Details");
+  const [StudardIndex, setStudardIndex] = useState("Pre-LKG");
+
+
 
   useEffect(() => {
     handleChange("Personal Details");
+    handleStudentList("Pre-LKG");
   }, []);
+
+  const handleStudentList = async (standard) => {
+
+    ApiHub.GetAll("student").then((data) => {
+      setKey(data.filter((student) => {
+        return student.student_level.toLowerCase() === standard.toLowerCase();
+      }));
+    })
+
+  }
 
   const handleChange = (page) => {
     setWhichToShow(page);
@@ -63,69 +87,41 @@ const StudentOverAllView = () => {
   return (
     <div className="studentdash">
       <div className="studentdash-topbar">
-        <div className="studentdash-searchDiv">
-          <input type="text" name="search" id="search"
-            className="studentdash-topbar-search" placeholder="Search" onChange={(e) => handleSearch(e.target.value)} />
+        <div className="standardlist">
+          {importData.grades.map((grade) => (
+            <button key={grade}
+              className={`standardlist-section ${StudardIndex === grade ? 'active' : ''}`}
+              onClick={(e) => { setStudardIndex(grade); handleStudentList(grade); }}
+            >{grade}</button>
+          ))}
         </div>
         <div className="studentdash-topbar-rightside">
-          <div className="studentdash-topbar-selectcontainer">
-            <select name="whichpage" id="whichpage" defaultValue={"Personal Details"}
-              onChange={(e) => { handleChange(e.target.value) }}>
-              <option value="Personal Details">Personal Details</option>
-              <option value="midterm1">Mid Term l</option>
-              <option value="midterm2">Mid Term ll</option>
-              <option value="midterm3">Mid Term lll</option>
-              <option value="quarterly">Quarterly</option>
-              <option value="halfyearly">Half Yearly</option>
-              <option value="annual">Annual</option>
-            </select>
+          <div className="studentdash-topbar-ExamSelector">
+            {[...ListOfExam.entries()].map(([key, value]) => (
+              <button key={key}
+                className={ExamIndex === key ? "active" : ""}
+                onClick={() => { setExamIndex(key); handleChange(key); }}
+              >{value}</button>
+            ))}
           </div>
-          <div className="studentdash-topbar-downloadBnDiv">
-            <button className="studentdash-topbar-downloadBn" onClick={exportToExcel}>
-              <img className="studentdash-topbar-downloadBnIcon"
-                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAACXBIWXMAAAsTAAALEwEAmpwYAAABQElEQVR4nO2XQUrDQBhG30IXegYRLCi4ycYr6EVceABd6Wou4cI79EIiuhIqFlzqciSQQgimSUGdZuY9+KGFkuR7ncyXgIiIiIjIf3MCvADPwDEFcgfEZm4pkNASUH8ujqAAXAHRWwD3gOgmiC0QKJBgC2ALRFsAWyDaAtgCgQIJtgC2QLQFsAWiLUBeLXAEPAGPQPULLVC1jjdjAty0gi3XSBgjoGqOsfrdNRNg1rnoPglDArrhl83qmgSnwKJ18R/A2QYCuuHfB26nSUoIPQKyCD9Gwk8Csgo/JKErIMvw6za0eev7fOTGmdVKiD2T1T+/qYSsww9JKCJ8n4Siwq+omuf7oXcGEREREdlGLoB74CHR1Oc+TxV+H/ga8Xr71/MJ7KUQsAu8bYGAV2CHRBwCl8BVoqnPfZAqvIgIU+cb6OMbxBjSvF8AAAAASUVORK5CYII="
-                alt="download--v2" />
-            </button>
+          <div className="studentdash-EndSide">
+            <div className="studentdash-searchDiv">
+              <input type="text" name="search" id="search"
+                className="studentdash-topbar-search" placeholder="Search" onChange={(e) => handleSearch(e.target.value)} />
+            </div>
+            <div className="studentdash-topbar-downloadBnDiv">
+              <button className="studentdash-topbar-downloadBn" onClick={exportToExcel}>Download</button>
+            </div>
           </div>
         </div>
       </div>
       <div className="Container_grid">
-        <div className="Container_grid1">
-          <StandardList Key={Key} setKey={setKey} />
-        </div>
         <div className="Container_grid2">
           {WhichToShow === "Personal Details" ?
             (<Student_PersonalData students={Key} examname={WhichToShow} />)
             : (<Student_ExamResults students={Key} examname={WhichToShow} setMarkSheet={setMarkSheet} />)}
         </div>
       </div>
-    </div>
-  )
-}
-
-const StandardList = ({ Key, setKey }) => {
-
-  useEffect(() => {
-    handleStudentList("Pre-LKG");
-  }, [])
-
-  const handleStudentList = async (standard) => {
-
-    ApiHub.GetAll("student").then((data) => {
-      setKey(data.filter((student) => {
-        return student.student_level.toLowerCase() === standard.toLowerCase();
-      }));
-    })
-
-  }
-
-  return (
-    <div className="standardlist">
-      {importData.grades.map((grade) => (
-        <p key={grade} className="standardlist-section"><a href="#"
-          onClick={(e) => { e.preventDefault(); handleStudentList(e.target.dataset.value); }}
-          data-value={grade} >{grade}</a></p>
-      ))}
     </div>
   )
 }
@@ -138,11 +134,11 @@ const Student_PersonalData = ({ students, examname }) => {
   return (
     <div className="studentlist">
       <h3 className="studentlist-title">Student List - {students[0]?.student_level}</h3>
-      <div className="studentlist-table-container">
-        <table className="studentlist-table">
+      <div className="studentlist-TableContainer">
+        <table>
           <thead>
             <tr>
-              <th className="studentlist-table-studentid">ID</th>
+              <th>ID</th>
               <th>Full Name</th>
               <th>Father Name</th>
               <th>Mother Name</th>
@@ -168,7 +164,7 @@ const Student_PersonalData = ({ students, examname }) => {
         </table>
       </div>
       <div className="pagination-container">
-        <Pagination itemsPerPage={5} items={students} onPageChange={setPaginatedItems} />
+        <Pagination itemsPerPage={10} items={students} onPageChange={setPaginatedItems} />
       </div>
     </div >
   )
@@ -227,13 +223,13 @@ const Student_ExamResults = ({ students, examname, setMarkSheet }) => {
     );
     titlegrade = element1.student_level;
   }
-  titlegrade = titlegrade.toUpperCase();
+  titlegrade = titlegrade.substring(0, 1).toUpperCase() + titlegrade.substring(1, titlegrade.length).toLowerCase();
 
   return (
     <div className="studentlist">
       <h3 className="studentlist-title">Student List - {titlegrade}</h3>
-      <div className="studentlist-table-container">
-        <table className="studentlist-table">
+      <div className="studentlist-TableContainer">
+        <table>
           <thead>
             <tr>
               <th>ID</th>
@@ -262,5 +258,4 @@ const Student_ExamResults = ({ students, examname, setMarkSheet }) => {
 
 
 
-export { StandardList, Student_ExamResults, Student_PersonalData, StudentOverAllView };
-
+export { Student_ExamResults, Student_PersonalData, StudentOverAllView };

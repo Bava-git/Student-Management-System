@@ -22,6 +22,8 @@ const AttendanceList = () => {
     const [DateFilter, setDateFilter] = useState('');
     const [Content, setContent] = useState([]);
     const Navigate = useNavigate();
+    const [AddMenu, setAddMenu] = useState(false);
+
 
     useEffect(() => {
         fetchData();
@@ -177,7 +179,7 @@ const AttendanceList = () => {
                         <div className="attendancepage-selectors-div">
                             <select name="grade" id="grade" className='selectors-common'
                                 onChange={(e) => { setGradeFilter(e.target.value) }} value={GradeFilter}>
-                                <option value="">-- Choose a grade --</option>
+                                <option value="">Select Grade</option>
                                 {importData.grades.map((grade, index) => (
                                     <option key={index} value={grade}>{grade}</option>
                                 ))}
@@ -354,6 +356,7 @@ const AttendanceForm = () => {
                                     {Content}
                                 </div>
                                 <div className="attendancepage-updateattendance-Bnfield">
+                                    <div></div>
                                     <button className='updateattendance-Bn' onClick={(e) => handleData(e)}>Insert</button>
                                 </div>
                             </div>
@@ -411,7 +414,7 @@ const AttendanceForm = () => {
                         <button className='normalBn' onClick={(e) => handleSendData(e)}>Upload</button>
                     </div>
                 </div>
-            </div>
+            </div >
         </div >
     )
 }
