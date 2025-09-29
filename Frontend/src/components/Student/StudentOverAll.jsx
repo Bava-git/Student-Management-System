@@ -149,7 +149,7 @@ const Student_PersonalData = ({ students, examname }) => {
           </thead>
           <tbody>
             {paginatedItems.map((element) => (
-              <tr key={element.id}>
+              <tr key={element.student_id}>
                 <td>{element.student_id}</td>
                 <td><a href={`studentreport/${element.student_id}`}>{element.student_name}</a></td>
                 <td>{element.student_fathername}</td>
@@ -187,13 +187,9 @@ const Student_ExamResults = ({ students, examname, setMarkSheet }) => {
 
   const handleStudentList = async (tempexamname) => {
 
-    ApiHub.GetAll(`student/${tempexamname}`).then((data) => {
-      setFilter(data.filter((student) => {
-        return student.studentGrade.toLowerCase() === students[0]?.student_level.toLowerCase();
-      }));
-      setMarkSheet(data.filter((student) => {
-        return student.studentGrade.toLowerCase() === students[0]?.student_level.toLowerCase();
-      }));
+    ApiHub.GetAll(`student/by?examName=${tempexamname}&studentGrade=${students[0]?.student_level.toLowerCase()}`).then((data) => {
+      setFilter(data);
+      setMarkSheet(data);
     });
 
   }
@@ -209,7 +205,7 @@ const Student_ExamResults = ({ students, examname, setMarkSheet }) => {
     if (!element2) return;
 
     MyArr.push(
-      <tr key={element1.id}>
+      <tr key={element1.student_id}>
         <td>{element1.student_id}</td>
         <td>{element1.student_name}</td>
         <td>{element2.tamil}</td>

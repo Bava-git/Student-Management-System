@@ -1,10 +1,7 @@
-package com.studentmanagementsystem.repository;
+package com.studentmanagementsystem.repository.schoolRepository;
 
-import com.studentmanagementsystem.model.Medical;
-import com.studentmanagementsystem.model.schoolModel.AssessmentResult;
+import com.studentmanagementsystem.model.schoolModel.Medical;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;

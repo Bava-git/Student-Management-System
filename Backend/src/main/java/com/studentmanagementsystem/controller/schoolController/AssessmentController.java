@@ -1,8 +1,11 @@
 package com.studentmanagementsystem.controller.schoolController;
 
 import com.studentmanagementsystem.model.schoolModel.Assessment;
-import com.studentmanagementsystem.service.AssessmentService;
+import com.studentmanagementsystem.model.schoolModel.Exam;
+import com.studentmanagementsystem.service.schoolService.AssessmentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,6 +21,17 @@ public class AssessmentController {
     @GetMapping
     public List<Assessment> listAS() {
         return assessmentSer.listAS();
+    }
+
+    @GetMapping("/by")
+    public ResponseEntity<?> getAssessmentByGrade(@RequestParam String studentGrade) {
+
+        List<Assessment> data = assessmentSer.getAssessmentByGrade(studentGrade);
+        if (data != null) {
+            return ResponseEntity.ok(data);
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Please check the request");
+        }
     }
 
     @PostMapping("/add")

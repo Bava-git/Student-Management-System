@@ -1,7 +1,7 @@
-package com.studentmanagementsystem.service;
+package com.studentmanagementsystem.service.schoolService;
 
-import com.studentmanagementsystem.model.Medical;
-import com.studentmanagementsystem.repository.MedicalRepository;
+import com.studentmanagementsystem.model.schoolModel.Medical;
+import com.studentmanagementsystem.repository.schoolRepository.MedicalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

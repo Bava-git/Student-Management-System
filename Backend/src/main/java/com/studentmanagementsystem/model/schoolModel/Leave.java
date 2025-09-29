@@ -18,11 +18,6 @@ public class Leave {
 
     @Id
     private String leaveId;
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    private long Id;
-
-//    @JsonProperty("leave_id")
-//    @Column(name = "leave_id")
 
     @JsonProperty("leave_date")
     @Column(name = "leave_date")

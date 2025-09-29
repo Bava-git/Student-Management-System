@@ -6,12 +6,21 @@
 }
 
 .leavemanagement-table-titleDiv {
-
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 5px;
     margin: 5px;
+}
+
+.leavemanagement-table-titleDiv p {
+    cursor: pointer;
+    padding: 0.5rem;
+
+    &:hover {
+        background-color: var(--blue-button-hovercolour);
+        border-radius: 2rem;
+    }
 }
 
 .leavemanagement-actionBn-div {
@@ -44,16 +53,19 @@
 
 .leavemanagement-table,
 .leavemanagement-add {
-    padding: 30px;
+    padding: 20px;
     margin: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
     border-radius: 20px;
-    width: 70%;
     overflow: auto;
+    width: 100%;
 }
 
 .leavemanagement-add {
     height: max-content;
+}
+
+.popup-content {
+    border-radius: 1.5rem;
 }
 
 .leavemanagement-add-field {
@@ -65,11 +77,11 @@
 }
 
 .leavemanagement-add-field input {
-     border: 1px solid black; 
+    border: 1px solid black;
 }
 
 .leavemanagement-add-field select {
-     border: 1px solid black; 
+    border: 1px solid black;
 }
 
 .leavemanagement-add-BnDiv {
@@ -97,7 +109,12 @@
     width: 100%;
 }
 
-.leavemanagement-table th,
-td {
-    /* border: 1px solid black; */
+.assessmentMarkTable {
+    margin-top: 2rem;
+    width: 100%;
+}
+
+/* --List-Medical-Issues-- */
+.medicaldetails {
+    width: 100%;
 }

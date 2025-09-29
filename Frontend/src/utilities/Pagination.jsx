@@ -15,10 +15,10 @@ function Pagination({ itemsPerPage, items, onPageChange }) {
     }
 
     useEffect(() => {
-        setItems();
+        ItemsGenerator();
     }, [itemOffset, itemsPerPage, items]);
 
-    const setItems = () => {
+    const ItemsGenerator = () => {
         const endOffset = itemOffset + itemsPerPage;
         onPageChange(items.slice(itemOffset, endOffset));
     }

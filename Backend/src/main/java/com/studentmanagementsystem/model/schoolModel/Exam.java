@@ -19,11 +19,6 @@ public class Exam {
 
     @Id
     private String examId;
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    private long Id;
-//
-//    @JsonProperty("exam_id")
-//    @Column(name = "exam_id")
 
     @JsonProperty("exam_subjectcode")
     @Column(name = "exam_subjectcode")
@@ -39,7 +34,7 @@ public class Exam {
 
     @JsonProperty("exam_grade")
     @Column(name = "exam_grade")
-    private String ExamGrade;
+    private String examGrade;
 
     @JsonProperty("exam_time")
     @Column(name = "exam_time")
@@ -47,5 +42,5 @@ public class Exam {
 
     @JsonProperty("exam_type")
     @Column(name = "exam_type")
-    private String examtype;
+    private String examType;
 }

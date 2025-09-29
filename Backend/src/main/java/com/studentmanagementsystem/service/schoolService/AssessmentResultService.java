@@ -1,9 +1,10 @@
-package com.studentmanagementsystem.service;
+package com.studentmanagementsystem.service.schoolService;
 
 import com.studentmanagementsystem.model.schoolModel.AssessmentResult;
-import com.studentmanagementsystem.repository.AssessmentRepository;
-import com.studentmanagementsystem.repository.AssessmentResultRepository;
+import com.studentmanagementsystem.repository.schoolRepository.AssessmentResultRepository;
+import com.studentmanagementsystem.repository.StudentRepository;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,33 +16,36 @@ import java.util.Optional;
 public class AssessmentResultService {
 
     @Autowired
-    private AssessmentResultRepository assessmentResultRepository;
+    private AssessmentResultRepository assessResRep;
+    @Autowired
+    private StudentRepository studentRep;
 
     public List<AssessmentResult> listARS() {
-        return assessmentResultRepository.findAll();
+        return assessResRep.findAll();
     }
 
     public AssessmentResult addARS(AssessmentResult assessmentResult) {
-        return assessmentResultRepository.save(assessmentResult);
+        return assessResRep.save(assessmentResult);
     }
 
     public List<AssessmentResult> findByStudentID(String studentID) {
-        return assessmentResultRepository.findByStudentID(studentID);
+        return assessResRep.findByStudentID(studentID);
     }
 
     @Transactional
     public AssessmentResult updateARS(AssessmentResult updateassessmentResult) {
         Optional<AssessmentResult> assessmentResult =
-                assessmentResultRepository.findBystudentIDAndAssessmentId(updateassessmentResult.getStudentID(), updateassessmentResult.getAssessmentId());
+                assessResRep.findBystudentIDAndAssessmentId(updateassessmentResult.getStudentID(), updateassessmentResult.getAssessmentId());
 
         if (assessmentResult.isPresent()) {
             AssessmentResult assessment = assessmentResult.get();
             assessment.setAssessmentMark(updateassessmentResult.getAssessmentMark());
-            return assessmentResultRepository.save(assessment);
+            return assessResRep.save(assessment);
         } else {
             throw new EntityNotFoundException("Assessment not found for student: " + updateassessmentResult.getStudentID());
         }
 
     }
+
 
 }

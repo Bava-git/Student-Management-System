@@ -1,9 +1,10 @@
 package com.studentmanagementsystem.controller.examsController;
 
+import com.studentmanagementsystem.dto.ExamHubDTO;
 import com.studentmanagementsystem.model.examsModel.*;
 import com.studentmanagementsystem.model.schoolModel.AssessmentResult;
-import com.studentmanagementsystem.repository.AssessmentResultRepository;
 import com.studentmanagementsystem.repository.examsRepository.*;
+import com.studentmanagementsystem.repository.schoolRepository.AssessmentResultRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,23 +15,83 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:5173")
 public class ExamUploadFile {
 
     @Autowired
-    private midterm1ModelRepository midterm1ModelRepository;
+    private midterm1ModelRepository midterm1Rep;
+    @Autowired
+    private midterm2ModelRepository midterm2Rep;
+    @Autowired
+    private midterm3ModelRepository midterm3Rep;
+    @Autowired
+    private quarterlyModelRepository quarterlyRep;
+    @Autowired
+    private halfyearlyModelRepository halfYearlyRep;
+    @Autowired
+    private annualModelRepository annualRep;
+    @Autowired
+    private AssessmentResultRepository assessmentResultRep;
 
-    @PostMapping("student/midterm1/upload")
-    public ResponseEntity<String> uploadFile_midterm1(@RequestParam("file") MultipartFile file) {
+    @PostMapping("/student/marksheet/upload/{examName}/{studentGrade}")
+    public ResponseEntity<String> uploadFile_midterm1(
+            @RequestParam("file") MultipartFile file,
+            @PathVariable String examName,
+            @PathVariable String studentGrade) {
         try {
             // Process the uploaded file
-            List<Midterm_One> entities = parseFile_midterm1(file);
 
-            // Save to the database
-            midterm1ModelRepository.saveAll(entities);
+            List<ExamHubDTO> entities = parseFileExamHub(file);
+            switch (examName) {
+                case "midterm1" -> {
+                    List<Midterm_One> items = entities.stream()
+                            .map(data -> new Midterm_One(data))
+                            .collect(Collectors.toList());
+                    midterm1Rep.saveAll(items);
+                }
+                case "midterm2" -> {
+                    List<Midterm_Two> items = entities.stream()
+                            .map(data -> new Midterm_Two(data))
+                            .collect(Collectors.toList());
+                    midterm2Rep.saveAll(items);
+                }
+                case "midterm3" -> {
+                    List<Midterm_Three> items = entities.stream()
+                            .map(data -> new Midterm_Three(data))
+                            .collect(Collectors.toList());
+                    midterm3Rep.saveAll(items);
+                }
+                case "quarterly" -> {
+                    List<Quarterly> items = entities.stream()
+                            .map(data -> new Quarterly(data))
+                            .collect(Collectors.toList());
+                    quarterlyRep.saveAll(items);
+                }
+                case "halfyearly" -> {
+                    List<Half_yearly> items = entities.stream()
+                            .map(data -> new Half_yearly(data))
+                            .collect(Collectors.toList());
+                    halfYearlyRep.saveAll(items);
+                }
+                case "annual" -> {
+                    List<Annual> items = entities.stream()
+                            .map(data -> new Annual(data))
+                            .collect(Collectors.toList());
+                    annualRep.saveAll(items);
+                }
+                case "assessment" -> {
+                    List<AssessmentResult> Assessment = parseFile_assessmentResult(file);
+                    System.out.println("Passed");
+                    assessmentResultRep.saveAll(Assessment);
+                }
+                default -> throw new RuntimeException("Invalid exam name: " + examName);
+            }
+
 
             return ResponseEntity.ok("File uploaded and data saved successfully.");
         } catch (Exception e) {
@@ -39,256 +100,30 @@ public class ExamUploadFile {
         }
     }
 
-    private List<Midterm_One> parseFile_midterm1(MultipartFile file) throws IOException {
-        List<Midterm_One> entities = new ArrayList<>();
+    private List<ExamHubDTO> parseFileExamHub(MultipartFile file) throws IOException {
+        List<ExamHubDTO> entities = new ArrayList<>();
 
-        // Parse the CSV file
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(file.getInputStream()))) {
             String line;
+
             while ((line = reader.readLine()) != null) {
+
                 String[] fields = line.split(",");
-                Midterm_One entity = new Midterm_One();
-                entity.setStudentGrade(fields[0]);
-                entity.setStudentID(fields[1]);
-                entity.setTamil(fields[2]);
-                entity.setEnglish(fields[3]);
-                entity.setMaths(fields[4]);
-                entity.setScience(fields[5]);
-                entity.setSocialscience(fields[6]);
-                // Map fields to your entity
+                ExamHubDTO entity = new ExamHubDTO();
+
+                entity.setStudentGrade(fields[0].trim());
+                entity.setStudentID(fields[1].trim());
+                entity.setTamil(fields[2].trim());
+                entity.setEnglish(fields[3].trim());
+                entity.setMaths(fields[4].trim());
+                entity.setScience(fields[5].trim());
+                entity.setSocialscience(fields[6].trim());
+
                 entities.add(entity);
             }
         }
+
         return entities;
-    }
-
-    @Autowired
-    private midterm2ModelRepository midterm2ModelRepository;
-
-    @PostMapping("student/midterm2/upload")
-    public ResponseEntity<String> uploadFile_midterm2(@RequestParam("file") MultipartFile file) {
-        try {
-            // Process the uploaded file
-            List<Midterm_Two> entities = parseFile_midterm2(file);
-
-            // Save to the database
-            midterm2ModelRepository.saveAll(entities);
-
-            return ResponseEntity.ok("File uploaded and data saved successfully.");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Error processing file: " + e.getMessage());
-        }
-    }
-
-    private List<Midterm_Two> parseFile_midterm2(MultipartFile file) throws IOException {
-        List<Midterm_Two> entities = new ArrayList<>();
-
-        // Parse the CSV file
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(file.getInputStream()))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] fields = line.split(",");
-                Midterm_Two entity = new Midterm_Two();
-                entity.setStudentGrade(fields[0]);
-                entity.setStudentID(fields[1]);
-                entity.setTamil(fields[2]);
-                entity.setEnglish(fields[3]);
-                entity.setMaths(fields[4]);
-                entity.setScience(fields[5]);
-                entity.setSocialscience(fields[6]);
-                // Map fields to your entity
-                entities.add(entity);
-            }
-        }
-        return entities;
-    }
-
-    @Autowired
-    private midterm3ModelRepository midterm3ModelRepository;
-
-    @PostMapping("student/midterm3/upload")
-    public ResponseEntity<String> uploadFile_midterm3(@RequestParam("file") MultipartFile file) {
-        try {
-            // Process the uploaded file
-            List<Midterm_Three> entities = parseFile_midterm3(file);
-
-            // Save to the database
-            midterm3ModelRepository.saveAll(entities);
-
-            return ResponseEntity.ok("File uploaded and data saved successfully.");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Error processing file: " + e.getMessage());
-        }
-    }
-
-    private List<Midterm_Three> parseFile_midterm3(MultipartFile file) throws IOException {
-        List<Midterm_Three> entities = new ArrayList<>();
-
-        // Parse the CSV file
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(file.getInputStream()))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] fields = line.split(",");
-                Midterm_Three entity = new Midterm_Three();
-                entity.setStudentGrade(fields[0]);
-                entity.setStudentID(fields[1]);
-                entity.setTamil(fields[2]);
-                entity.setEnglish(fields[3]);
-                entity.setMaths(fields[4]);
-                entity.setScience(fields[5]);
-                entity.setSocialscience(fields[6]);
-                // Map fields to your entity
-                entities.add(entity);
-            }
-        }
-        return entities;
-    }
-
-    @Autowired
-    private quarterlyModelRepository quarterlyModelRepository;
-
-    @PostMapping("student/quarterly/upload")
-    public ResponseEntity<String> uploadFile_quarterly(@RequestParam("file") MultipartFile file) {
-        try {
-            // Process the uploaded file
-            List<Quarterly> entities = parseFile_quarterly(file);
-
-            // Save to the database
-            quarterlyModelRepository.saveAll(entities);
-
-            return ResponseEntity.ok("File uploaded and data saved successfully.");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Error processing file: " + e.getMessage());
-        }
-    }
-
-    private List<Quarterly> parseFile_quarterly(MultipartFile file) throws IOException {
-        List<Quarterly> entities = new ArrayList<>();
-
-        // Parse the CSV file
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(file.getInputStream()))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] fields = line.split(",");
-                Quarterly entity = new Quarterly();
-                entity.setStudentGrade(fields[0]);
-                entity.setStudentID(fields[1]);
-                entity.setTamil(fields[2]);
-                entity.setEnglish(fields[3]);
-                entity.setMaths(fields[4]);
-                entity.setScience(fields[5]);
-                entity.setSocialscience(fields[6]);
-                // Map fields to your entity
-                entities.add(entity);
-            }
-        }
-        return entities;
-    }
-
-    @Autowired
-    private halfyearlyModelRepository halfyearlymodelrepository;
-
-    @PostMapping("student/halfyearly/upload")
-    public ResponseEntity<String> uploadFile_halfyearly(@RequestParam("file") MultipartFile file) {
-        try {
-            // Process the uploaded file
-            List<Half_yearly> entities = parseFile_halfyearly(file);
-
-            // Save to the database
-            halfyearlymodelrepository.saveAll(entities);
-
-            return ResponseEntity.ok("File uploaded and data saved successfully.");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Error processing file: " + e.getMessage());
-        }
-    }
-
-    private List<Half_yearly> parseFile_halfyearly(MultipartFile file) throws IOException {
-        List<Half_yearly> entities = new ArrayList<>();
-
-        // Parse the CSV file
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(file.getInputStream()))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] fields = line.split(",");
-                Half_yearly entity = new Half_yearly();
-                entity.setStudentGrade(fields[0]);
-                entity.setStudentID(fields[1]);
-                entity.setTamil(fields[2]);
-                entity.setEnglish(fields[3]);
-                entity.setMaths(fields[4]);
-                entity.setScience(fields[5]);
-                entity.setSocialscience(fields[6]);
-                // Map fields to your entity
-                entities.add(entity);
-            }
-        }
-        return entities;
-    }
-
-    @Autowired
-    private annualModelRepository annualmodelrepository;
-
-    @PostMapping("student/annual/upload")
-    public ResponseEntity<String> uploadFile_annual(@RequestParam("file") MultipartFile file) {
-        try {
-            // Process the uploaded file
-            List<Annual> entities = parseFile_annual(file);
-
-            // Save to the database
-            annualmodelrepository.saveAll(entities);
-
-            return ResponseEntity.ok("File uploaded and data saved successfully.");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Error processing file: " + e.getMessage());
-        }
-    }
-
-    private List<Annual> parseFile_annual(MultipartFile file) throws IOException {
-        List<Annual> entities = new ArrayList<>();
-
-        // Parse the CSV file
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(file.getInputStream()))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] fields = line.split(",");
-                Annual entity = new Annual();
-                entity.setStudentGrade(fields[0]);
-                entity.setStudentID(fields[1]);
-                entity.setTamil(fields[2]);
-                entity.setAnnualenglish(fields[3]);
-                entity.setMaths(fields[4]);
-                entity.setScience(fields[5]);
-                entity.setSocialscience(fields[6]);
-                // Map fields to your entity
-                entities.add(entity);
-            }
-        }
-        return entities;
-    }
-
-    @Autowired
-    private AssessmentResultRepository assessmentResultRepository;
-
-    @PostMapping("student/assessment/upload")
-    public ResponseEntity<String> uploadFile_assessmentResult(@RequestParam("file") MultipartFile file) {
-        try {
-            // Process the uploaded file
-            List<AssessmentResult> entities = parseFile_assessmentResult(file);
-
-            // Save to the database
-            assessmentResultRepository.saveAll(entities);
-
-            return ResponseEntity.ok("File uploaded and data saved successfully.");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Error processing file: " + e.getMessage());
-        }
     }
 
     private List<AssessmentResult> parseFile_assessmentResult(MultipartFile file) throws IOException {
@@ -300,11 +135,11 @@ public class ExamUploadFile {
             while ((line = reader.readLine()) != null) {
                 String[] fields = line.split(",");
                 AssessmentResult entity = new AssessmentResult();
-                entity.setStudentID(fields[0]);
+                entity.setTeacherID(Long.parseLong(fields[0]));
                 entity.setStudentGrade(fields[1]);
-                entity.setAssessmentNote(fields[2]);
-                entity.setAssessmentMark(Double.valueOf(fields[3]));
-                entity.setTeacherID(Long.parseLong(fields[4]));
+                entity.setStudentID(fields[2]);
+                entity.setAssessmentId(fields[3]);
+                entity.setAssessmentMark(Double.valueOf(fields[4]));
                 // Map fields to your entity
                 entities.add(entity);
             }
@@ -313,17 +148,14 @@ public class ExamUploadFile {
     }
 
     @GetMapping("studentreport/{Student_id}")
-    public List<Object> getdataforthisid(@PathVariable String Student_id,
-                                         Midterm_One midterm1model, Midterm_Two midterm2model,
-                                         Midterm_Three midterm3model, Quarterly quarterlyModel,
-                                         Half_yearly halfyearlyModel, Annual annualModel) {
-        List<Midterm_One> mid1mark = midterm1ModelRepository.findbystudentId(Student_id);
-        List<Midterm_Two> mid2mark = midterm2ModelRepository.findbystudentId(Student_id);
-        List<Midterm_Three> mid3mark = midterm3ModelRepository.findbystudentId(Student_id);
-        List<Quarterly> quarterlymark = quarterlyModelRepository.findbystudentId(Student_id);
-        List<Half_yearly> halfyearlymark = halfyearlymodelrepository.findbystudentId(Student_id);
-        List<Annual> annualmark = annualmodelrepository.findbystudentId(Student_id);
-        List<AssessmentResult> assessmentmark = assessmentResultRepository.findByStudentID(Student_id);
+    public List<Object> getdataforthisid(@PathVariable String Student_id) {
+        List<Midterm_One> mid1mark = midterm1Rep.findbystudentId(Student_id);
+        List<Midterm_Two> mid2mark = midterm2Rep.findbystudentId(Student_id);
+        List<Midterm_Three> mid3mark = midterm3Rep.findbystudentId(Student_id);
+        List<Quarterly> quarterlymark = quarterlyRep.findbystudentId(Student_id);
+        List<Half_yearly> halfyearlymark = halfYearlyRep.findbystudentId(Student_id);
+        List<Annual> annualmark = annualRep.findbystudentId(Student_id);
+        List<AssessmentResult> assessmentmark = assessmentResultRep.findByStudentID(Student_id);
 
 
         List<Object> allMarks = new ArrayList<>();

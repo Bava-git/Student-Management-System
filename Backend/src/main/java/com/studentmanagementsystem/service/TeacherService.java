@@ -1,7 +1,7 @@
-package com.studentmanagementsystem.service.schoolService;
+package com.studentmanagementsystem.service;
 
-import com.studentmanagementsystem.model.schoolModel.Teacher;
-import com.studentmanagementsystem.repository.schoolRepository.TeacherRepository;
+import com.studentmanagementsystem.model.Teacher;
+import com.studentmanagementsystem.repository.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

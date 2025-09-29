@@ -11,4 +11,6 @@ public interface halfyearlyModelRepository extends JpaRepository<Half_yearly, Lo
 
     @Query(value = "SELECT * FROM halfyearly WHERE student_id = :studentId", nativeQuery = true)
     List<Half_yearly> findbystudentId(@Param("studentId") String StudentID);
+
+    List<?> findByStudentGrade(String studentGrade);
 }

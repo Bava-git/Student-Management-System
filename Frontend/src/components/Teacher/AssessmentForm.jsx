@@ -18,16 +18,19 @@ const AssessmentForm = () => {
     const [ActiveScreen, setActiveScreen] = useState(null);
     const InsertformRef = React.useRef(null);
     const DeleteformRef = React.useRef(null);
+    const [StudardIndex, setStudardIndex] = useState("Pre-LKG");
 
     useEffect(() => {
         fetchData();
-    }, [])
+    }, [StudardIndex])
 
     const fetchData = () => {
-        ApiHub.GetAll("studentreport/assessment").then((data) => {
+
+        ApiHub.GetAll(`studentreport/assessment/by?studentGrade=${StudardIndex}`).then((data) => {
             setassessmentRawData(data);
             CreateTable(data);
         });
+
     }
 
     const CreateTable = (data) => {
@@ -52,7 +55,7 @@ const AssessmentForm = () => {
     const handleAdd = async (event) => {
         event.preventDefault();
 
-        let teacher_id = localStorage.getItem("Id");
+        let teacher_id = sessionStorage.getItem("Id");
         let teacher_name = "";
         await ApiHub.GetOneById("teacher/search", teacher_id).then((data) => {
             teacher_name = data.teacher_name;
@@ -73,7 +76,7 @@ const AssessmentForm = () => {
         ApiHub.Save("studentreport/assessment/add", FormData).then((status) => {
             if (status === 200) {
                 toast.success("Added Successfully", { duration: 2000 });
-                fetchData();
+                resetFormElements();
             }
         })
 
@@ -111,21 +114,33 @@ const AssessmentForm = () => {
                         <button className='leavemanagement-actionBn' onClick={() => setActiveScreen("deletescreen")}>Delete</button>
                     </div>
                 </div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>S.No</th>
-                            <th>ID</th>
-                            <th>Assessment</th>
-                            <th>Grade</th>
-                            <th>Dead Line</th>
-                            <th>Assessed teacher</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {AssessmentTableData != 0 ? (AssessmentTableData) : (<tr><td colSpan={7}>No Assessment</td></tr>)}
-                    </tbody>
-                </table>
+                <div className="studentdash-topbar leavemanagement-adjustments">
+                    <div className="standardlist">
+                        {importData.grades.map((grade) => (
+                            <button key={grade}
+                                className={`standardlist-section ${StudardIndex === grade ? 'active' : ''}`}
+                                onClick={(e) => { setStudardIndex(grade); }}
+                            >{grade}</button>
+                        ))}
+                    </div>
+                </div>
+                <div className='leavemanagement-generalTable'>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>S.No</th>
+                                <th>ID</th>
+                                <th>Assessment</th>
+                                <th>Grade</th>
+                                <th>Dead Line</th>
+                                <th>Assessed teacher</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {AssessmentTableData != 0 ? (AssessmentTableData) : (<tr><td colSpan={7}>No Assessment</td></tr>)}
+                        </tbody>
+                    </table>
+                </div>
             </div>
             {ActiveScreen === "addscreen" && (<div className="leavemanagement-add">
                 <h1 className='leavemanagement-table-title'>Add Assessment</h1>
@@ -203,50 +218,50 @@ const AssessmentSubmittedList = () => {
     const [assessmentMark, setassessmentMark] = useState("");
     const [selectedAssessment, setselectedAssessment] = useState({});
     const [AssessmentTableData, setAssessmentTableData] = useState([]);
-    const [StudentData, setStudentData] = useState([]);
     const [ActiveScreen, setActiveScreen] = useState(null);
     const AssessmentMarkformRef = React.useRef(null);
+    const [PreviousAssessments, setPreviousAssessments] = useState(true);
+    const [StudardIndex, setStudardIndex] = useState("Pre-LKG");
+    const [SubjectIndex, setSubjectIndex] = useState("Tamil");
 
     useEffect(() => {
         fetchData();
-    }, [])
+    }, [StudardIndex, SubjectIndex])
 
     const fetchData = () => {
 
         ApiHub.GetAll("studentreport/assessmentresult").then((data) => {
-            CreateTable(data);
-        });
-
-        ApiHub.GetAll("student").then((data) => {
-            // console.log(data);
-            setStudentData(data);
+            data = SharedUtilities.groupingItems(data, "student_grade");
+            handleTableData(data);
         });
 
     }
 
-    const CreateTable = (data) => {
-
+    const handleTableData = (data) => {
         const LocalArr = [];
-        data.map((element, index) => {
+        const groupedElement = data[StudardIndex]?.filter((item) => { return item.assessment.assessmentNote === SubjectIndex });
+        const length = groupedElement?.length ?? 0;
+        for (let j = 0; j < length; j++) {
+            const singleElement = groupedElement[j];
             LocalArr.push(
-                <tr key={index}>
-                    <td>{index + 1}</td>
-                    <td>{element.student_id}</td>
-                    <td>{element.student_grade}</td>
-                    <td>{element.assessmentNote}</td>
-                    <td>{element.teacher_name}</td>
-                    <td>{element.assessmentMark}</td>
+                <tr key={StudardIndex + j}>
+                    <td>{j + 1}</td>
+                    <td>{singleElement.student.student_name}</td>
+                    <td>{singleElement.student_grade}</td>
+                    <td>{singleElement.assessment.assessmentNote}</td>
+                    <td>{singleElement.teacher.teacher_name}</td>
+                    <td>{singleElement.assessmentMark}</td>
                     <td>
                         <button className='assessment-updateBn' onClick={() => {
                             setActiveScreen("updatescreen");
-                            setselectedAssessment(element);
+                            setselectedAssessment(singleElement);
                         }}>Update</button>
                     </td>
                 </tr>
-            );
-        })
+            )
+        }
         setAssessmentTableData(LocalArr);
-    }
+    };
 
     const handleUpdateMark = async (event) => {
         event.preventDefault();
@@ -258,12 +273,10 @@ const AssessmentSubmittedList = () => {
 
         const sendData = {
             Id: selectedAssessment.id,
-            teacher_id: selectedAssessment.teacher_id,
-            teacher_name: selectedAssessment.teacher_name,
-            student_id: selectedAssessment.student_id,
-            assessmentId: selectedAssessment.assessmentId,
+            teacher_id: selectedAssessment.teacher.teacher_id,
+            student_id: selectedAssessment.student.student_id,
+            assessmentId: selectedAssessment.assessment.assessmentId,
             student_grade: selectedAssessment.student_grade,
-            assessmentNote: selectedAssessment.assessmentNote,
             assessmentMark
         }
 
@@ -287,6 +300,7 @@ const AssessmentSubmittedList = () => {
         fetchData();
         setassessmentMark("");
         setselectedAssessment({});
+        setActiveScreen(null);
     }
 
     return (
@@ -294,23 +308,42 @@ const AssessmentSubmittedList = () => {
             <div className="leavemanagement-table">
                 <div className="leavemanagement-table-titleDiv">
                     <h1 className='leavemanagement-table-title'>Update Assessments Mark</h1>
+                    <p onClick={() => { setPreviousAssessments(!PreviousAssessments); }}>Old assessment</p>
                 </div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>S.No</th>
-                            <th>Student</th>
-                            <th>Grade</th>
-                            <th>Assessment</th>
-                            <th>Assessed teacher</th>
-                            <th>Mark</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {AssessmentTableData != 0 ? (AssessmentTableData) : (<tr><td colSpan={7}>No Assessment</td></tr>)}
-                    </tbody>
-                </table>
+                <div className="standardlist">
+                    {importData.subjects.map((subjects) => (
+                        <button key={subjects}
+                            className={`standardlist-section ${SubjectIndex === subjects ? 'active' : ''}`}
+                            onClick={(e) => { setSubjectIndex(subjects); }}
+                        >{subjects}</button>
+                    ))}
+                </div>
+                <div className="standardlist">
+                    {importData.grades.map((grade) => (
+                        <button key={grade}
+                            className={`standardlist-section ${StudardIndex === grade ? 'active' : ''}`}
+                            onClick={(e) => { setStudardIndex(grade); }}
+                        >{grade}</button>
+                    ))}
+                </div>
+                <div className='assessmentMarkTable'>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>S.No</th>
+                                <th>Student</th>
+                                <th>Grade</th>
+                                <th>Assessment</th>
+                                <th>Assessed teacher</th>
+                                <th>Mark</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {AssessmentTableData.length != 0 ? (AssessmentTableData) : (<tr><td colSpan={7}>No Assessment submited yet</td></tr>)}
+                        </tbody>
+                    </table>
+                </div>
             </div>
             {ActiveScreen === "updatescreen" && (<div className="leavemanagement-add">
                 <h1 className='leavemanagement-table-title'>Add Assessment</h1>

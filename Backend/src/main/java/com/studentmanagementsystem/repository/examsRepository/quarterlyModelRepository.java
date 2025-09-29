@@ -11,4 +11,6 @@ public interface quarterlyModelRepository extends JpaRepository<Quarterly, Long>
 
     @Query(value = "SELECT * FROM quarterly WHERE student_id = :studentId", nativeQuery = true)
     List<Quarterly> findbystudentId(@Param("studentId") String StudentID);
+
+    List<?> findByStudentGrade(String studentGrade);
 }

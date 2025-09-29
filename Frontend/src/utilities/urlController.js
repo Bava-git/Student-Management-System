@@ -24,6 +24,7 @@ export const medicalssues = "/student/medicalssues";
 
 // Exam & Assessments
 export const examlist = "/student/examschedulelist";
+export const examschedulle = "/student/examschedulemanager";
 export const assessmentform = "/studentreport/assessment";
 export const assessmentsubmittedlist = "/studentreport/assessment/update";
 

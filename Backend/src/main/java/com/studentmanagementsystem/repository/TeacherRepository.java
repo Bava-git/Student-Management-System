@@ -1,6 +1,6 @@
-package com.studentmanagementsystem.repository.schoolRepository;
+package com.studentmanagementsystem.repository;
 
-import com.studentmanagementsystem.model.schoolModel.Teacher;
+import com.studentmanagementsystem.model.Teacher;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

@@ -62,11 +62,11 @@ const MedicalIssues = () => {
 
     return (
         <div className="leavemanagement">
-            <div className="leavemanagement-table">
+            <div className="medicaldetails">
                 <div className="leavemanagement-table-titleDiv">
                     <h1 className='leavemanagement-table-title'>Student Medical Issues</h1>
                 </div>
-                <div className='medicaldetails'>
+                <div className='medicaldetails-table'>
                     {MedicalTableData}
                 </div>
             </div>

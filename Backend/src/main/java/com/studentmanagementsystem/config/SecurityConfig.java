@@ -39,7 +39,7 @@ public class SecurityConfig {
                         .hasAnyAuthority("ROLE_ADMIN", "ROLE_TEACHER", "ROLE_STUDENT")
                         .requestMatchers("/user/changepassword").hasAnyAuthority("ROLE_ADMIN", "ROLE_TEACHER", "ROLE_STUDENT")
                         .requestMatchers("/teacher/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_TEACHER")
-                        .requestMatchers("/student/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_TEACHER")
+                        .requestMatchers("/student/**", "/student/marksheet/upload/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_TEACHER")
                         .requestMatchers("/studentreport/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_TEACHER", "ROLE_STUDENT")
                         .requestMatchers("/school/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_TEACHER")
                         .requestMatchers("/user/login").permitAll()

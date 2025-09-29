@@ -11,4 +11,6 @@ public interface midterm2ModelRepository extends JpaRepository<Midterm_Two, Long
 
     @Query(value = "SELECT * FROM midterm_2 WHERE student_id = :studentId", nativeQuery = true)
     List<Midterm_Two> findbystudentId(@Param("studentId") String StudentID);
+
+    List<?> findByStudentGrade(String studentGrade);
 }

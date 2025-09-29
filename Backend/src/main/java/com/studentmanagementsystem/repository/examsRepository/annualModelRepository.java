@@ -11,4 +11,6 @@ public interface annualModelRepository extends JpaRepository<Annual, Long> {
 
     @Query(value = "SELECT * FROM annual WHERE student_id = :studentId", nativeQuery = true)
     List<Annual> findbystudentId(@Param("studentId") String StudentID);
+
+    List<?> findByStudentGrade(String studentGrade);
 }

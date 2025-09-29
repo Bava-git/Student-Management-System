@@ -1,16 +1,13 @@
 package com.studentmanagementsystem.model.examsModel;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.studentmanagementsystem.dto.ExamHubDTO;
+import com.studentmanagementsystem.model.Student;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Data;
 
 @Entity
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Table(name = "halfyearly")
-public class Half_yearly {
+public class ExamHub {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,31 +16,31 @@ public class Half_yearly {
     @JsonProperty("tamil")
     @Column(name = "tamil")
     private String tamil;
+
     @JsonProperty("english")
     @Column(name = "english")
     private String english;
+
     @JsonProperty("maths")
     @Column(name = "maths")
     private String maths;
+
     @JsonProperty("science")
     @Column(name = "science")
     private String science;
+
     @JsonProperty("socialscience")
     @Column(name = "socialscience")
     private String socialscience;
 
-    @Column(name = "student_id")
+    @Column(name = "student_id", insertable = false, updatable = false)
     private String StudentID;
+
+    @ManyToOne
+    @JoinColumn(name = "student_id")
+    private Student student;
+
     @Column(name = "student_grade")
     private String studentGrade;
 
-    public Half_yearly(ExamHubDTO data) {
-        this.StudentID = data.getStudentID();
-        this.studentGrade = data.getStudentGrade();
-        this.tamil = data.getTamil();
-        this.english = data.getEnglish();
-        this.maths = data.getMaths();
-        this.science = data.getScience();
-        this.socialscience = data.getSocialscience();
-    }
 }

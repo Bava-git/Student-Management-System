@@ -1,9 +1,7 @@
-package com.studentmanagementsystem.controller;
+package com.studentmanagementsystem.controller.schoolController;
 
-import com.studentmanagementsystem.model.Medical;
-import com.studentmanagementsystem.model.schoolModel.Teacher;
-import com.studentmanagementsystem.repository.MedicalRepository;
-import com.studentmanagementsystem.service.MedicalService;
+import com.studentmanagementsystem.model.schoolModel.Medical;
+import com.studentmanagementsystem.service.schoolService.MedicalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

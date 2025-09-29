@@ -1,7 +1,7 @@
-package com.studentmanagementsystem.controller.schoolController;
+package com.studentmanagementsystem.controller;
 
-import com.studentmanagementsystem.model.schoolModel.Teacher;
-import com.studentmanagementsystem.service.schoolService.TeacherService;
+import com.studentmanagementsystem.model.Teacher;
+import com.studentmanagementsystem.service.TeacherService;
 import com.studentmanagementsystem.config.jwtconfig.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

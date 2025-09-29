@@ -1,7 +1,7 @@
-package com.studentmanagementsystem.service;
+package com.studentmanagementsystem.service.schoolService;
 
 import com.studentmanagementsystem.model.schoolModel.Assessment;
-import com.studentmanagementsystem.repository.AssessmentRepository;
+import com.studentmanagementsystem.repository.schoolRepository.AssessmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +16,10 @@ public class AssessmentService {
 
     public List<Assessment> listAS() {
         return assessmentRepository.findAll();
+    }
+
+    public List<Assessment> getAssessmentByGrade(String studentGrade) {
+        return assessmentRepository.findByStudentGrade(studentGrade);
     }
 
     public Assessment addAS(Assessment assessment) {

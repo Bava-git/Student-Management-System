@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import jakarta.transaction.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ExamScheduleService {
@@ -18,12 +19,24 @@ public class ExamScheduleService {
         return examScheduleRepository.findAll();
     }
 
-    public Exam addExam(Exam exammodel) {
-        return examScheduleRepository.save(exammodel);
+    public List<Exam> getByGradeAndType(String examGrade, String examType) {
+        return examScheduleRepository.findByExamGradeAndExamType(examGrade, examType);
+    }
+
+    public Optional<Exam> addExam(Exam exam) {
+
+        List<Exam> allExam = examScheduleRepository.findByExamGradeAndExamType(exam.getExamGrade(), exam.getExamType());
+        boolean isUnique = allExam.stream()
+                .noneMatch(item -> item.getExamSubjectName().equals(exam.getExamSubjectName()));
+        if (isUnique) {
+            return Optional.ofNullable(examScheduleRepository.save(exam));
+        }
+        return Optional.empty();
+
     }
 
     @Transactional
-    public String deleteExam(String ExamId) {
+    public boolean deleteExam(String ExamId) {
         return examScheduleRepository.deleteByExamId(ExamId);
     }
 

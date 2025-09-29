@@ -23,6 +23,7 @@ import LeftSliter from "./components/LeftSliter";
 import Header from "./components/NavBar";
 import PrivateComponents from "./components/PrivateComponents";
 import MedicalIssues from './components/School/MedicalIssues';
+import Exam_Schedulle from './components/School/Exam_Schedulle';
 import { AttendanceForm, AttendanceList } from "./components/Student/AttendanceEnquiry";
 import { StudentAdd } from "./components/Student/StudentAdmitionForm";
 import { StudentOverAllView } from "./components/Student/StudentOverAll";
@@ -72,6 +73,7 @@ function App() {
             <Route path={url.studentadd} element={<StudentAdd />} />
             <Route path={url.studentreportupload} element={<StudentReportUpload />} />
             <Route path={url.examlist} element={<ExamList />} />
+            <Route path={url.examschedulle} element={<Exam_Schedulle />} />
             <Route path={url.medicalssues} element={<MedicalIssues />} />
           </Route>
 

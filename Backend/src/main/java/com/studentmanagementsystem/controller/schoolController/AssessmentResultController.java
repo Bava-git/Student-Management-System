@@ -1,7 +1,7 @@
 package com.studentmanagementsystem.controller.schoolController;
 
 import com.studentmanagementsystem.model.schoolModel.AssessmentResult;
-import com.studentmanagementsystem.service.AssessmentResultService;
+import com.studentmanagementsystem.service.schoolService.AssessmentResultService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

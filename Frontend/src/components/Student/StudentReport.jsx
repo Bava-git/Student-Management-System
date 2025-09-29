@@ -23,9 +23,9 @@ const StudentReportUpload = () => {
         const formData = new FormData();
         formData.append("file", file);
 
-        ApiHub.UploadData(`student/${ExamName}/upload`, formData).then((status) => {
+        ApiHub.UploadData(`student/marksheet/upload/${ExamName.toLowerCase().replaceAll(" ", "")}/${Grade}`, formData).then((status) => {
             if (status === 200) {
-                alert("File uploaded successfully: " + response.data.message);
+                alert("File uploaded successfully");
             }
         });
 
@@ -39,20 +39,16 @@ const StudentReportUpload = () => {
                     <h2><strong> CSV Upload Warning </strong></h2>
                     <p>Please ensure your CSV file is correctly formatted before uploading.</p>
                     <div className="warning-Checkboxs">
-                        <input type="checkbox" />
-                        <p>CSV should not contain headers</p>
-                    </div>
-                    <div className="warning-Checkboxs">
-                        <input type="checkbox" />
-                        <p> CSV should contain the following columns in order: Student Grade, Student ID, Tamil Mark,
+                        <input type="checkbox" id="check2" />
+                        <p> CSV should contain the following columns in order: Student ID, Tamil Mark,
                             English Mark, Maths Mark, Science Mark, Social Mark</p>
                     </div>
                     <div className="warning-Checkboxs">
-                        <input type="checkbox" />
+                        <input type="checkbox" id="check3" />
                         <p>CSV should not contain empty rows</p>
                     </div>
                     <div className="warning-Checkboxs">
-                        <input type="checkbox" />
+                        <input type="checkbox" id="check4" />
                         <p>Ensure all data is accurate before uploading</p>
                     </div>
                 </div>
@@ -83,7 +79,7 @@ const StudentReportUpload = () => {
                 </div>
                 <div className='grade-container'>
                     <label htmlFor="file" className="grade-label">Upload file:</label>
-                    <input type="file" id="file" name='file' className="grade-select" onChange={handleFileChange} />
+                    <input type="file" id="file" name='file' className="grade-select uploadBn" onChange={handleFileChange} />
                 </div>
                 <div className='studentreportadd-grade-BnDiv'>
                     <button className='examlist-UploadBn' onClick={handleSubmit}>Upload</button>

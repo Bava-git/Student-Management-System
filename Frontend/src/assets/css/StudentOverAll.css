@@ -46,7 +46,7 @@
 
 .studentlist-TableContainer {
     width: 100%;
-    min-height: 380px
+    min-height: 280px
 }
 
 .studentlist-TableContainer table {
@@ -338,7 +338,6 @@ td {
     border-radius: 10px;
     display: flex;
     flex-direction: column;
-    margin: 0 20px;
     padding: 10px;
 }
 
@@ -379,6 +378,14 @@ td {
 .studentdash-topbar-ExamSelector button.active {
     background-color: #d77b78;
     border-radius: 1rem;
+}
+
+.leavemanagement-generalTable {
+    padding: 1rem 0;
+}
+
+.leavemanagement-adjustments {
+    padding: 0;
 }
 
 
@@ -434,16 +441,25 @@ td {
     flex-wrap: wrap;
 }
 
+.filteredexamschedule-examtableContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: max-content;
+    padding: 30px;
+    margin: 10px;
+    border-radius: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    width: 100%;
+}
+
 .filteredexamschedule-examtable {
     display: flex;
     flex-direction: column;
     align-items: center;
     height: max-content;
     width: 100%;
-    padding: 30px;
-    margin: 10px;
     border-radius: 20px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 .filteredexamschedule-examtable table {
@@ -456,6 +472,24 @@ td {
     font-weight: bold;
     padding: 10px;
     margin: 10px;
+}
+
+.examSchedule-DownloadDiv {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    width: 100%;
+    margin: 0.5rem;
+}
+
+.examSchedule-Download {
+    cursor: pointer;
+    padding: 0.5rem;
+
+    &:hover {
+        border-radius: 10px;
+        background-color: #d77b78;
+    }
 }
 
 .filteredexamschedule-assessment {

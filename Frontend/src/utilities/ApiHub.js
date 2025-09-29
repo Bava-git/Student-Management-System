@@ -1,20 +1,35 @@
 import axios from "axios";
-const baseURL = "http://localhost:3000";
+import { toast } from 'sonner';
+
+const baseApi = axios.create({
+    baseURL: "http://localhost:3000",
+    headers: { "Content-Type": "application/json" },
+});
+
+baseApi.interceptors.request.use((config) => {
+    const token = sessionStorage.getItem("authtoken");
+    if (token) { config.headers.Authorization = `Bearer ${token}` }
+    return config;
+});
+
+baseApi.interceptors.response.use(
+    response => response,
+    error => {
+        if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+            alert("Session expired. Please log in again.");
+            sessionStorage.clear(); // clear
+            window.location.href = "/login";  // Redirect user to login page
+        }
+        return Promise.reject(error);
+    }
+);
 
 // ((((((((((((((((((((((((()))))))))))))))))))))))))
 
-export const GetOneById = async (directURL, ID, DebugResponse) => {
+export const GetOneById = async (directURL, ID) => {
     try {
 
-        let response = await axios.get(`${baseURL}/${directURL}/${ID}`, {
-            headers: {
-                Authorization: "Bearer " + sessionStorage.getItem("authtoken"),
-            }
-        })
-
-        if (DebugResponse) {
-            DebugResponse(response);
-        }
+        let response = await baseApi.get(`${directURL}/${ID}`);
 
         if (response.status === 200) {
             return response.data;
@@ -34,19 +49,11 @@ export const GetOneById = async (directURL, ID, DebugResponse) => {
 
 // ((((((((((((((((((((((((()))))))))))))))))))))))))
 
-export const GetAll = async (directURL, DebugResponse) => {
+export const GetAll = async (directURL) => {
 
     try {
 
-        let response = await axios.get(`${baseURL}/${directURL}`, {
-            headers: {
-                Authorization: "Bearer " + sessionStorage.getItem("authtoken"),
-            }
-        })
-
-        if (DebugResponse) {
-            DebugResponse(response);
-        }
+        let response = await baseApi.get(`${directURL}`);
 
         if (response.status === 200) {
             return response.data;
@@ -66,19 +73,13 @@ export const GetAll = async (directURL, DebugResponse) => {
 // ((((((((((((((((((((((((()))))))))))))))))))))))))
 
 
-export const Save = async (directURL, saveData, DebugResponse) => {
+export const Save = async (directURL, saveData) => {
     try {
 
-        let response = await axios.post(`${baseURL}/${directURL}`, saveData, {
-            headers: {
-                Authorization: "Bearer " + sessionStorage.getItem("authtoken"),
-            }
-        })
-
-        if (DebugResponse) {
-            DebugResponse(response);
+        let response = await baseApi.post(`${directURL}`, saveData);
+        if (response.status === 200 && response.data) {
+            toast.success(response.data.displayMessage, { duration: 2000 });
         }
-
         return response.status;
 
     } catch (error) {
@@ -96,19 +97,10 @@ export const Save = async (directURL, saveData, DebugResponse) => {
 
 // ((((((((((((((((((((((((()))))))))))))))))))))))))
 
-export const SaveAll = async (directURL, saveData, DebugResponse) => {
+export const SaveAll = async (directURL, saveData) => {
     try {
 
-        let response = await axios.post(`${baseURL}/${directURL}`, saveData, {
-            headers: {
-                Authorization: "Bearer " + sessionStorage.getItem("authtoken"),
-            }
-        })
-
-        if (DebugResponse) {
-            DebugResponse(response);
-        }
-
+        let response = await baseApi.post(`${directURL}`, saveData);
         return response.status;
 
     } catch (error) {
@@ -126,19 +118,10 @@ export const SaveAll = async (directURL, saveData, DebugResponse) => {
 
 // ((((((((((((((((((((((((()))))))))))))))))))))))))
 
-export const Delete = async (directURL, ID, DebugResponse) => {
+export const Delete = async (directURL, ID) => {
     try {
 
-        let response = await axios.delete(`${baseURL}/${directURL}/delete/${ID}`, {
-            headers: {
-                Authorization: "Bearer " + sessionStorage.getItem("authtoken"),
-            }
-        })
-
-        if (DebugResponse) {
-            DebugResponse(response);
-        }
-
+        let response = await baseApi.delete(`${directURL}/delete/${ID}`);
         return response.status;
 
     } catch (error) {
@@ -156,19 +139,10 @@ export const Delete = async (directURL, ID, DebugResponse) => {
 
 // ((((((((((((((((((((((((()))))))))))))))))))))))))
 
-export const Update = async (directURL, saveData, DebugResponse) => {
+export const Update = async (directURL, saveData) => {
     try {
 
-        let response = await axios.put(`${baseURL}/${directURL}`, saveData, {
-            headers: {
-                Authorization: "Bearer " + sessionStorage.getItem("authtoken"),
-            }
-        })
-
-        if (DebugResponse) {
-            DebugResponse(response);
-        }
-
+        let response = await baseApi.put(`${directURL}`, saveData);
         return response.status;
 
     } catch (error) {
@@ -184,21 +158,16 @@ export const Update = async (directURL, saveData, DebugResponse) => {
 }
 
 
-// ((((((((((((((((((((((((()))))))))))))))))))))))))
-
-export const UploadData = async (directURL, saveData, DebugResponse) => {
+// ((((((((((((((((((((((((())))))))))))))))))))))))
+export const UploadData = async (directURL, saveData) => {
     try {
 
-        let response = await axios.post(`${baseURL}/${directURL}`, saveData, {
+        let response = await axios.post(`http://localhost:3000/${directURL}`, saveData, {
             headers: {
-                Authorization: "Bearer " + sessionStorage.getItem("authtoken"),
+                "Authorization": `Bearer ` + sessionStorage.getItem("authtoken"),
                 "Content-Type": "multipart/form-data",
             }
         })
-
-        if (DebugResponse) {
-            DebugResponse(response);
-        }
 
         return response.status;
 
@@ -212,16 +181,6 @@ export const UploadData = async (directURL, saveData, DebugResponse) => {
             "saveData: ", saveData,
             "Error: ", error);
     }
-}
-
-// ((((((((((((((((((((((((()))))))))))))))))))))))))
-
-const DebugResponse = (response) => {
-
-    console.log("From DebugResponse" + response);
-    console.log("From DebugResponse" + response.data);
-    console.log("From DebugResponse" + response.status);
-
 }
 
 // ((((((((((((((((((((((((()))))))))))))))))))))))))

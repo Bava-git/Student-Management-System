@@ -36,7 +36,7 @@ public class Assessment {
 
     @JsonProperty("student_level")
     @Column(name = "student_level")
-    private String StudentLevel;
+    private String studentGrade;
 
     @JsonProperty("finishBeforeDateTime")
     @Column(name = "finishBeforeDateTime")
