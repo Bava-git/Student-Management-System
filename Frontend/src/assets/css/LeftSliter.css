@@ -4,7 +4,7 @@
     left: 0px;
     z-index: 0;
     height: 100%;
-    background-color: white;
+    background-color: #FFFFF0;
     padding: 100px 0;
     transition: width 0.5s;
     width: 50px;
@@ -38,6 +38,7 @@
 
 .leftSilter-Bns :hover {
     color: rgba(251, 0, 0, 0.5);
+    font-weight: 800;
 }
 
 .leftSilter:hover span {
@@ -45,5 +46,5 @@
 }
 
 .leftSilter:hover {
-    width: 160px;
+    width: max-content;
 }

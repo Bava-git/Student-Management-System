@@ -239,8 +239,7 @@ const AttendanceForm = () => {
                 student_id: absentStudent.student_id,
                 student_name: absentStudent.student_name,
                 student_level: absentStudent.student_level,
-                // teacher_id: localStorage.getItem("Id"),
-                teacher_id: 12345,
+                teacher_id: sessionStorage.getItem("Id"),
             }));
         }
     }
@@ -322,7 +321,6 @@ const AttendanceForm = () => {
         toast.success("cleared", { duration: 2000 });
     }
 
-
     return (
         <div className="attendancepage">
             <div className="attendancepage-attendancelist">
@@ -395,7 +393,7 @@ const AttendanceForm = () => {
                 </div>
                 <div className="attendancepage-updateattendance">
                     <div className="attendancepage-updateattendance-field">
-                        <Popup trigger={<button className='normalBn'>Clear All</button>}
+                        <Popup trigger={<button className='normalBn' >Clear All</button>}
                             modal nested contentStyle={{
                                 width: "max-content", height: "max-content",
                                 backgroundColor: "transparent", border: "none", boxShadow: "none"

@@ -2,13 +2,16 @@ package com.studentmanagementsystem.model.examsModel;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.studentmanagementsystem.dto.ExamHubDTO;
+import com.studentmanagementsystem.model.Student;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "quarterly")
 public class Quarterly {
 
@@ -16,7 +19,9 @@ public class Quarterly {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long Id;
 
-    //    midterm1_tamil, midterm1_english, midterm1_maths, midterm1_science, midterm1_socialscience, student_id
+    @Column(name = "student_grade")
+    private String studentGrade;
+
     @JsonProperty("tamil")
     @Column(name = "tamil")
     private String tamil;
@@ -33,13 +38,17 @@ public class Quarterly {
     @Column(name = "socialscience")
     private String socialscience;
 
-    @Column(name = "student_id")
-    private String StudentID;
-    @Column(name = "student_grade")
-    private String studentGrade;
+    @JsonProperty("student_id")
+    @Column(name = "student_id", insertable = false, updatable = false)
+    private String studentID;
+
+    @ManyToOne
+    @JoinColumn(name = "student_id", referencedColumnName = "student_id")
+    private Student student;
+
 
     public Quarterly(ExamHubDTO data) {
-        this.StudentID = data.getStudentID();
+        this.studentID = data.getStudentID();
         this.studentGrade = data.getStudentGrade();
         this.tamil = data.getTamil();
         this.english = data.getEnglish();

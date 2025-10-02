@@ -23,8 +23,12 @@
     }
 }
 
-.leavemanagement-actionBn-div {
+.activeMode {
+    background-color: var(--blue-button-hovercolour);
+    border-radius: 2rem;
+}
 
+.leavemanagement-actionBn-div {
     padding: 5px;
     margin: 5px;
 }

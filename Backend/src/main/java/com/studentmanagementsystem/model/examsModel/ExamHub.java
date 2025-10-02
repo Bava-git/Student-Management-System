@@ -3,10 +3,14 @@ package com.studentmanagementsystem.model.examsModel;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.studentmanagementsystem.model.Student;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class ExamHub {
 
     @Id

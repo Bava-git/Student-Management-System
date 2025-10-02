@@ -1,13 +1,14 @@
 package com.studentmanagementsystem.model.schoolModel;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.studentmanagementsystem.model.Student;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
-@Setter
-@Getter
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "medicaldb")
 public class Medical {
 
@@ -16,8 +17,12 @@ public class Medical {
     private long Id;
 
     @JsonProperty("student_id")
-    @Column(name = "student_id")
+    @Column(name = "student_id", insertable = false, updatable = false)
     private String studentID;
+
+    @ManyToOne
+    @JoinColumn(name = "student_id", referencedColumnName = "student_id")
+    private Student student;
 
     @JsonProperty("Medical_Issue1")
     @Column(name = "Medical_Issue1")

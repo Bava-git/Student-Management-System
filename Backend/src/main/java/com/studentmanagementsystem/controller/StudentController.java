@@ -20,6 +20,11 @@ public class StudentController {
         return studentService.listStudents();
     }
 
+    @GetMapping("/filter")
+    public List<Student> getByGrade(@RequestParam String studentLevel) {
+        return studentService.getByGrade(studentLevel);
+    }
+
     @GetMapping("search/{StudentID}")
     public Student findbystudentId(@PathVariable String StudentID) {
         return studentService.findbystudentId(StudentID);

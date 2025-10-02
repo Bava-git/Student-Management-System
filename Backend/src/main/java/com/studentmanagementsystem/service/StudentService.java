@@ -18,6 +18,10 @@ public class StudentService {
         return studentRepository.findAll();
     }
 
+    public List<Student> getByGrade(String studentLevel){
+        return studentRepository.findByStudentLevel(studentLevel);
+    }
+
     public Student addStudent(Student student) {
         return studentRepository.save(student);
     }

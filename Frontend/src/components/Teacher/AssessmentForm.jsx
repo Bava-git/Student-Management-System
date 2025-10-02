@@ -4,6 +4,7 @@ import { toast } from 'sonner';
 import * as ApiHub from '../../utilities/ApiHub';
 import * as SharedUtilities from '../../utilities/SharedUtilities';
 import * as importData from '../../utilities/DataMembers';
+import Popup from 'reactjs-popup';
 
 const AssessmentForm = () => {
 
@@ -220,13 +221,13 @@ const AssessmentSubmittedList = () => {
     const [AssessmentTableData, setAssessmentTableData] = useState([]);
     const [ActiveScreen, setActiveScreen] = useState(null);
     const AssessmentMarkformRef = React.useRef(null);
-    const [PreviousAssessments, setPreviousAssessments] = useState(true);
+    const [PreviousAssessments, setPreviousAssessments] = useState(false);
     const [StudardIndex, setStudardIndex] = useState("Pre-LKG");
     const [SubjectIndex, setSubjectIndex] = useState("Tamil");
 
     useEffect(() => {
         fetchData();
-    }, [StudardIndex, SubjectIndex])
+    }, [StudardIndex, SubjectIndex, PreviousAssessments])
 
     const fetchData = () => {
 
@@ -237,28 +238,50 @@ const AssessmentSubmittedList = () => {
 
     }
 
+    const handleSingleData = (singleElement) => {
+        setActiveScreen("updatescreen");
+        setselectedAssessment(singleElement);
+    }
+
     const handleTableData = (data) => {
+        console.log("Passed");
+        
+        setAssessmentTableData([]);
         const LocalArr = [];
         const groupedElement = data[StudardIndex]?.filter((item) => { return item.assessment.assessmentNote === SubjectIndex });
         const length = groupedElement?.length ?? 0;
         for (let j = 0; j < length; j++) {
             const singleElement = groupedElement[j];
-            LocalArr.push(
-                <tr key={StudardIndex + j}>
-                    <td>{j + 1}</td>
-                    <td>{singleElement.student.student_name}</td>
-                    <td>{singleElement.student_grade}</td>
-                    <td>{singleElement.assessment.assessmentNote}</td>
-                    <td>{singleElement.teacher.teacher_name}</td>
-                    <td>{singleElement.assessmentMark}</td>
-                    <td>
-                        <button className='assessment-updateBn' onClick={() => {
-                            setActiveScreen("updatescreen");
-                            setselectedAssessment(singleElement);
-                        }}>Update</button>
-                    </td>
-                </tr>
-            )
+            if (singleElement.assessmentMark === 0) {
+                LocalArr.push(
+                    <tr key={StudardIndex + j}>
+                        <td>{j + 1}</td>
+                        <td>{singleElement.student.student_name}</td>
+                        <td>{singleElement.student_grade}</td>
+                        <td>{singleElement.assessment.assessmentNote}</td>
+                        <td>{singleElement.teacher.teacher_name}</td>
+                        <td>{singleElement.assessmentMark}</td>
+                        <td>
+                            <button className='assessment-updateBn' onClick={() => { handleSingleData(singleElement); }}>Update Mark</button>
+                        </td>
+                    </tr>
+                );
+            }
+            if (PreviousAssessments) {
+                LocalArr.push(
+                    <tr key={StudardIndex + j}>
+                        <td>{j + 1}</td>
+                        <td>{singleElement.student.student_name}</td>
+                        <td>{singleElement.student_grade}</td>
+                        <td>{singleElement.assessment.assessmentNote}</td>
+                        <td>{singleElement.teacher.teacher_name}</td>
+                        <td>{singleElement.assessmentMark}</td>
+                        <td>
+                            <button className='assessment-updateBn' onClick={() => { handleSingleData(singleElement); }}>Update Mark</button>
+                        </td>
+                    </tr>
+                );
+            }
         }
         setAssessmentTableData(LocalArr);
     };
@@ -308,7 +331,10 @@ const AssessmentSubmittedList = () => {
             <div className="leavemanagement-table">
                 <div className="leavemanagement-table-titleDiv">
                     <h1 className='leavemanagement-table-title'>Update Assessments Mark</h1>
-                    <p onClick={() => { setPreviousAssessments(!PreviousAssessments); }}>Old assessment</p>
+                    <p className={PreviousAssessments ? "activeMode" : ""}
+                        onClick={() => { setPreviousAssessments(!PreviousAssessments); }}
+                    >Old assessment
+                    </p>
                 </div>
                 <div className="standardlist">
                     {importData.subjects.map((subjects) => (
@@ -345,37 +371,39 @@ const AssessmentSubmittedList = () => {
                     </table>
                 </div>
             </div>
-            {ActiveScreen === "updatescreen" && (<div className="leavemanagement-add">
-                <h1 className='leavemanagement-table-title'>Add Assessment</h1>
-                <form action="" ref={AssessmentMarkformRef}>
-                    <div className="leavemanagement-add-field">
-                        <p>Student:</p>
-                        <p>{selectedAssessment.student_id}</p>
-                    </div>
-                    <div className="leavemanagement-add-field">
-                        <p>Grade:</p>
-                        <p>{selectedAssessment.student_grade}</p>
-                    </div>
-                    <div className="leavemanagement-add-field">
-                        <p>Assessment:</p>
-                        <p>{selectedAssessment.assessmentNote}</p>
-                    </div>
-                    <div className="leavemanagement-add-field">
-                        <p>Assessed teacher</p>
-                        <p>{selectedAssessment.teacher_name}</p>
-                    </div>
-                    <div className="leavemanagement-add-field">
-                        <label htmlFor="sujectcode">Assessment Mark: </label>
-                        <input type="text" name="sujectcode" id="sujectcode"
-                            onChange={(e) => { setassessmentMark(e.target.value) }}
-                        />
-                    </div>
-                    <div className="leavemanagement-add-BnDiv">
-                        <button className='leavemanagement-add-Bn' onClick={() => { setActiveScreen(null); resetFormElements(); }}>Cancel</button>
-                        <button className='leavemanagement-add-Bn' onClick={(e) => handleUpdateMark(e)}>Update</button>
-                    </div>
-                </form>
-            </div>)}
+            <Popup open={ActiveScreen === "updatescreen"} onClose={() => ActiveScreen === null} modal>
+                <div className="leavemanagement-add">
+                    <h1 className='leavemanagement-table-title'>Update Assessment</h1>
+                    <form action="" ref={AssessmentMarkformRef}>
+                        <div className="leavemanagement-add-field">
+                            <p>Student:</p>
+                            <p>{selectedAssessment.student_id}</p>
+                        </div>
+                        <div className="leavemanagement-add-field">
+                            <p>Grade:</p>
+                            <p>{selectedAssessment.student_grade}</p>
+                        </div>
+                        <div className="leavemanagement-add-field">
+                            <p>Assessment:</p>
+                            <p>{selectedAssessment?.assessment?.assessmentNote}</p>
+                        </div>
+                        <div className="leavemanagement-add-field">
+                            <p>Assessed teacher</p>
+                            <p>{selectedAssessment?.teacher?.teacher_name}</p>
+                        </div>
+                        <div className="leavemanagement-add-field">
+                            <label htmlFor="sujectcode">Assessment Mark: </label>
+                            <input type="text" name="sujectcode" id="sujectcode"
+                                onChange={(e) => { setassessmentMark(e.target.value) }}
+                            />
+                        </div>
+                        <div className="leavemanagement-add-BnDiv">
+                            <button className='leavemanagement-add-Bn' onClick={() => { setActiveScreen(null); }}>Cancel</button>
+                            <button className='leavemanagement-add-Bn' onClick={(e) => handleUpdateMark(e)}>Update</button>
+                        </div>
+                    </form>
+                </div>
+            </Popup>
         </div>
     )
 }

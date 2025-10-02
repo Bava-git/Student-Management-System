@@ -1,20 +1,15 @@
 package com.studentmanagementsystem.model.schoolModel;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.studentmanagementsystem.dto.ExamHubDTO;
 import com.studentmanagementsystem.model.Student;
 import com.studentmanagementsystem.model.Teacher;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-import java.time.LocalDateTime;
 
 @Entity
-@Setter
-@Getter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "assessmentresultdb")
@@ -56,14 +51,4 @@ public class AssessmentResult {
     @JoinColumn(name = "student_id", referencedColumnName = "student_id")
     private Student student;
 
-    public AssessmentResult(ExamHubDTO data) {
-        this.studentID = data.getStudentID();
-        this.StudentGrade = data.getStudentGrade();
-
-        this.TeacherID = data.getTeacherID();
-
-        this.assessmentId = data.getAssessmentId();
-        this.assessmentMark = data.getAssessmentMark();
-
-    }
 }

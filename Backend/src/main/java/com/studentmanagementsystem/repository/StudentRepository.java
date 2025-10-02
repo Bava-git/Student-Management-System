@@ -5,8 +5,12 @@ import org.springframework.data.jpa.repository.Query;
 
 import com.studentmanagementsystem.model.Student;
 
+import java.util.List;
+
 public interface StudentRepository extends JpaRepository<Student, Long> {
 
     @Query(value = "SELECT * FROM studentpersonal WHERE student_id = :StudentID", nativeQuery = true)
     Student findbystudentId(String StudentID);
+
+    List<Student> findByStudentLevel(String studentLevel);
 }

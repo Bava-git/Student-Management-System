@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import * as ApiHub from '../../utilities/ApiHub';
 import * as SharedUtilities from '../../utilities/SharedUtilities';
+import Popup from 'reactjs-popup';
 
 const Leave_Management = () => {
 
@@ -110,43 +111,46 @@ const Leave_Management = () => {
                     </tbody>
                 </table>
             </div>
-            {ActiveScreen === "addscreen" && (<div className="leavemanagement-add">
-                <form action="" ref={InsertformRef}>
-                    <h1 className='leavemanagement-table-title'>Add Leave</h1>
-                    <div className="leavemanagement-add-field">
-                        <label htmlFor="leavedate">Leave Date: </label>
-                        <input type="date" name="leavedate" id="leavedate"
-                            onChange={(e) => { setleave_date(e.target.value) }}
-                        />
-                    </div>
-                    <div className="leavemanagement-add-field">
-                        <label htmlFor="leavereason">Leave Reason: </label>
-                        <input type="text" name="leavereason" id="leavereason"
-                            onChange={(e) => { setleave_reason(e.target.value) }}
-                        />
-                    </div>
-                    <div className="leavemanagement-add-BnDiv">
-                        <button className='leavemanagement-add-Bn' onClick={() => setActiveScreen(null)}>Cancel</button>
-                        <button className='leavemanagement-add-Bn' onClick={handleAdd}>Insert</button>
-                    </div>
-                </form>
-            </div>)}
-            {ActiveScreen === "deletescreen" && (<div className="leavemanagement-add">
-                <form action="" ref={DeleteformRef}>
-                    <h1 className='leavemanagement-table-title'>Delete Leave</h1>
-                    <div className="leavemanagement-add-field">
-                        <label htmlFor="leavereason">Leave ID: </label>
-                        <input type="text" name="leavereason" id="leavereason"
-                            onChange={(e) => { setleave_ID(e.target.value) }}
-                        />
-                    </div>
-                    <div className="leavemanagement-add-BnDiv">
-                        <button className='leavemanagement-add-Bn' onClick={() => setActiveScreen(null)}>Cancel</button>
-                        <button className='leavemanagement-add-Bn' onClick={handleDelete}>Delete</button>
-                    </div>
-                </form>
-            </div>)
-            }
+            <Popup open={ActiveScreen === "addscreen"} onClose={() => ActiveScreen === null} modal>
+                <div className="leavemanagement-add">
+                    <form action="" ref={InsertformRef}>
+                        <h1 className='leavemanagement-table-title'>Add Leave</h1>
+                        <div className="leavemanagement-add-field">
+                            <label htmlFor="leavedate">Leave Date: </label>
+                            <input type="date" name="leavedate" id="leavedate"
+                                onChange={(e) => { setleave_date(e.target.value) }}
+                            />
+                        </div>
+                        <div className="leavemanagement-add-field">
+                            <label htmlFor="leavereason">Leave Reason: </label>
+                            <input type="text" name="leavereason" id="leavereason"
+                                onChange={(e) => { setleave_reason(e.target.value) }}
+                            />
+                        </div>
+                        <div className="leavemanagement-add-BnDiv">
+                            <button className='leavemanagement-add-Bn' onClick={() => setActiveScreen(null)}>Cancel</button>
+                            <button className='leavemanagement-add-Bn' onClick={handleAdd}>Insert</button>
+                        </div>
+                    </form>
+                </div>
+            </Popup>
+            <Popup open={ActiveScreen === "deletescreen"} onClose={() => ActiveScreen === null} modal>
+                <div className="leavemanagement-add">
+                    <form action="" ref={DeleteformRef}>
+                        <h1 className='leavemanagement-table-title'>Delete Leave</h1>
+                        <div className="leavemanagement-add-field">
+                            <label htmlFor="leavereason">Leave ID: </label>
+                            <input type="text" name="leavereason" id="leavereason"
+                                onChange={(e) => { setleave_ID(e.target.value) }}
+                            />
+                        </div>
+                        <div className="leavemanagement-add-BnDiv">
+                            <button className='leavemanagement-add-Bn' onClick={() => setActiveScreen(null)}>Cancel</button>
+                            <button className='leavemanagement-add-Bn' onClick={handleDelete}>Delete</button>
+                        </div>
+                    </form>
+                </div>
+            </Popup>
         </div >
     )
 }

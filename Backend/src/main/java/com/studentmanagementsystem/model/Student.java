@@ -2,29 +2,24 @@ package com.studentmanagementsystem.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Date;
 
 @Entity
-@Setter
-@Getter
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "studentpersonal")
 public class Student {
 
-//    studentpersonal - student_id, student_name, student_fathername, student_mothername, student_parentphone,
-//    student_parentemail, student_emergencycontact, student_dob, student_streetname, student_city, student_Zipcode
-
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    private long Id;
     @Id
     @JsonProperty("student_id")
     @Column(name = "student_id")
     private String StudentID;
 
     @JsonProperty("student_level")
-    private String StudentLevel;
+    private String studentLevel;
 
     @JsonProperty("student_name")
     @Column(name = "student_name")

@@ -7,7 +7,7 @@ import * as SharedUtilities from '../../utilities/SharedUtilities';
 
 const StudentOverAllView = () => {
 
-  const [Key, setKey] = useState([]);
+  const [RawData, setRawData] = useState([]);
   const [MarkSheet, setMarkSheet] = useState([]);
   const [WhichToShow, setWhichToShow] = useState('');
   const ListOfExam = new Map(new Map([
@@ -31,11 +31,9 @@ const StudentOverAllView = () => {
 
   const handleStudentList = async (standard) => {
 
-    ApiHub.GetAll("student").then((data) => {
-      setKey(data.filter((student) => {
-        return student.student_level.toLowerCase() === standard.toLowerCase();
-      }));
-    })
+    await ApiHub.GetAll(`student/filter?studentLevel=${standard}`).then((data) => {
+      setRawData(data);
+    });
 
   }
 
@@ -48,7 +46,7 @@ const StudentOverAllView = () => {
     let SheetName = "";
     let FileName = "";
     if (WhichToShow === "Personal Details") {
-      TableData = Key;
+      TableData = RawData;
       SheetName = "StudentDetails"
       FileName = "StudentDetails " + Date();
     } else if (WhichToShow != "Personal Details" && MarkSheet.length > 0) {
@@ -67,12 +65,12 @@ const StudentOverAllView = () => {
 
   const handleSearch = (searchkeys) => {
     if (!searchkeys) {
-      setKey(TempStorage);
+      setRawData(TempStorage);
       return;
     }
 
     if (TempStorage.length === 0) {
-      setTempStorage(Key);
+      setTempStorage(RawData);
     }
 
     const filteredData = TempStorage.filter((student) => (
@@ -80,7 +78,11 @@ const StudentOverAllView = () => {
       student.student_name.toLowerCase().includes(searchkeys.toLowerCase())
     ));
 
-    setKey(filteredData);
+    if (filteredData.length === 0) {
+      return;
+    }
+
+    setRawData(filteredData);
   };
 
 
@@ -118,15 +120,15 @@ const StudentOverAllView = () => {
       <div className="Container_grid">
         <div className="Container_grid2">
           {WhichToShow === "Personal Details" ?
-            (<Student_PersonalData students={Key} examname={WhichToShow} />)
-            : (<Student_ExamResults students={Key} examname={WhichToShow} setMarkSheet={setMarkSheet} />)}
+            (<Student_PersonalData students={RawData} />)
+            : (<Student_ExamResults students={RawData} examname={WhichToShow} setMarkSheet={setMarkSheet} />)}
         </div>
       </div>
     </div>
   )
 }
 
-const Student_PersonalData = ({ students, examname }) => {
+const Student_PersonalData = ({ students }) => {
 
   const [paginatedItems, setPaginatedItems] = useState([]);
   students = SharedUtilities.safeSort(students, "student_name");
@@ -148,7 +150,7 @@ const Student_PersonalData = ({ students, examname }) => {
             </tr>
           </thead>
           <tbody>
-            {paginatedItems.map((element) => (
+            {paginatedItems?.length != 0 ? paginatedItems.map((element) => (
               <tr key={element.student_id}>
                 <td>{element.student_id}</td>
                 <td><a href={`studentreport/${element.student_id}`}>{element.student_name}</a></td>
@@ -158,7 +160,10 @@ const Student_PersonalData = ({ students, examname }) => {
                 <td>{element.student_parentphone}</td>
                 <td>{element.student_emergencycontact}</td>
               </tr>
-            ))}
+            ))
+              :
+              (<tr><td colSpan={7} className='examerrormassage'>No student </td></tr>)
+            }
           </tbody>
           <tfoot></tfoot>
         </table>
@@ -172,7 +177,7 @@ const Student_PersonalData = ({ students, examname }) => {
 
 const Student_ExamResults = ({ students, examname, setMarkSheet }) => {
 
-  const [Filter, setFilter] = useState([]);
+  const [RawMarkData, setRawMarkData] = useState([]);
   let tempexamname = examname;
   const [paginatedItems, setPaginatedItems] = useState([]);
   students = SharedUtilities.safeSort(students, "student_name");
@@ -188,7 +193,7 @@ const Student_ExamResults = ({ students, examname, setMarkSheet }) => {
   const handleStudentList = async (tempexamname) => {
 
     ApiHub.GetAll(`student/by?examName=${tempexamname}&studentGrade=${students[0]?.student_level.toLowerCase()}`).then((data) => {
-      setFilter(data);
+      setRawMarkData(data);
       setMarkSheet(data);
     });
 
@@ -199,25 +204,22 @@ const Student_ExamResults = ({ students, examname, setMarkSheet }) => {
 
   let length = paginatedItems?.length ?? 0;
   for (let i = 0; i < length; i++) {
-    const element1 = paginatedItems[i];
-    const element2 = Filter[i];
-
-    if (!element2) return;
+    const element = paginatedItems[i];
 
     MyArr.push(
-      <tr key={element1.student_id}>
-        <td>{element1.student_id}</td>
-        <td>{element1.student_name}</td>
-        <td>{element2.tamil}</td>
-        <td>{element2.english}</td>
-        <td>{element2.maths}</td>
-        <td>{element2.science}</td>
-        <td>{element2.socialscience}</td>
-        <td>{(element2.tamil > 34 && element2.english > 34 &&
-          element2.maths > 34 && element2.science > 34 && element2.socialscience > 34) ? "Pass" : "Fail"}</td>
+      <tr key={element.student_id}>
+        <td>{element.student_id}</td>
+        <td>{element.student.student_name}</td>
+        <td>{element.tamil}</td>
+        <td>{element.english}</td>
+        <td>{element.maths}</td>
+        <td>{element.science}</td>
+        <td>{element.socialscience}</td>
+        <td>{(element.tamil > 34 && element.english > 34 &&
+          element.maths > 34 && element.science > 34 && element.socialscience > 34) ? "Pass" : "Fail"}</td>
       </tr>
     );
-    titlegrade = element1.student_level;
+    titlegrade = element.studentGrade;
   }
   titlegrade = titlegrade.substring(0, 1).toUpperCase() + titlegrade.substring(1, titlegrade.length).toLowerCase();
 
@@ -239,13 +241,14 @@ const Student_ExamResults = ({ students, examname, setMarkSheet }) => {
             </tr>
           </thead>
           <tbody>
-            {MyArr}
+            {MyArr?.length != 0 ? (MyArr) :
+              (<tr><td colSpan={8} className='examerrormassage'>Exam result are not yet released</td></tr>)}
           </tbody>
           <tfoot></tfoot>
         </table>
       </div>
       <div className="pagination-container">
-        <Pagination itemsPerPage={10} items={students} onPageChange={setPaginatedItems} />
+        <Pagination itemsPerPage={10} items={RawMarkData} onPageChange={setPaginatedItems} />
       </div>
     </div>
   )
