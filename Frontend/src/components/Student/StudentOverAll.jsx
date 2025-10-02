@@ -25,8 +25,8 @@ const StudentOverAllView = () => {
 
 
   useEffect(() => {
-    handleChange("Personal Details");
     handleStudentList("Pre-LKG");
+    handleChange("Personal Details");
   }, []);
 
   const handleStudentList = async (standard) => {

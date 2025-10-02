@@ -61,6 +61,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Homepage />} />
           <Route path={url.login} element={<Login />} />
+          <Route path={url.testscreen} element={<TestScreen />} />
 
           <Route element={<PrivateComponents allowedRoles={["ROLE_TEACHER", "ROLE_ADMIN"]} />}>
             <Route path={url.teacherprofile} element={<TeacherProfile />} />

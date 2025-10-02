@@ -1,12 +1,14 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from 'react-router-dom';
 import * as ApiHub from '../../utilities/ApiHub';
 import * as importData from '../../utilities/DataMembers';
+import * as url from '../../utilities/urlController';
 
 const StudentReportUpload = () => {
     const [Grade, setGrade] = useState('');
     const [ExamName, setExamName] = useState('');
     const [file, setFile] = useState(null);
+    const Navigate = useNavigate();
 
     const handleFileChange = (e) => {
         setFile(e.target.files[0]);
@@ -26,6 +28,7 @@ const StudentReportUpload = () => {
         ApiHub.UploadData(`student/marksheet/upload/${ExamName.toLowerCase().replaceAll(" ", "")}/${Grade}`, formData).then((status) => {
             if (status === 200) {
                 alert("File uploaded successfully");
+                Navigate(url.studentreportupload);
             }
         });
 
@@ -124,8 +127,13 @@ const StudentReportView = () => {
             return;
         }
 
-        ApiHub.GetAll(`studentreport/${Student_ID}`).then((data) => { setReportData(data); });
+        ApiHub.GetAll(`studentreport/${Student_ID}`).then((data) => {
+            // console.log(data);
+            setReportData(data);
+            mainFilter(data);
+        });
         ApiHub.GetAll(`studentreport/attendance/${Student_ID}`).then((data) => {
+            // console.log(data);
             setAttendanceData(data);
             getDaysInMonth();
         });
@@ -135,38 +143,56 @@ const StudentReportView = () => {
         });
     }
 
+    const [TotalArr, setTotalArr] = useState([]);
+    const [ShortListedExams, setShortListedExams] = useState([]);
 
-    const TotalArr = [];
-    if (ReportData.length > 0) {
-        for (let i = 0; i < ReportData.length; i++) {
-            const element = ReportData[i];
-            let total = parseInt(element.tamil) + parseInt(element.english) + parseInt(element.maths) +
-                parseInt(element.science) + parseInt(element.socialscience);
-            TotalArr.push(total);
-        }
+    const mainFilter = (data) => {
+
+        importData.exams.map((exam) => {
+            const item = data[exam];
+            if (item?.length === 1) {
+                setShortListedExams(prev => {
+                    if (!prev.includes(exam)) {
+                        return [...prev, exam];
+                    }
+                    return prev;
+                });
+
+                const element = item[0];
+                let total = parseInt(element.tamil) + parseInt(element.english) + parseInt(element.maths) +
+                    parseInt(element.science) + parseInt(element.socialscience);
+                setTotalArr(prev => [...prev, total]);
+            }
+        });
+
     }
 
+    const handlePerformanceCategories = (score) => {
+        if (score >= 450) return 'Excellent';
+        if (score >= 400) return 'Very Good';
+        if (score >= 350) return 'Good';
+        if (score >= 300) return 'Average';
+        return 'Needs Improvement';
+    }
+
+
     const [SubjectPerArr, setSubjectPerArr] = useState([]);
-    const [ExamName, setExamName] = useState('Exam');
-    const [Visibility, setVisibility] = useState(false);
+    const [expandedRow, setExpandedRow] = useState(null);
 
-    const handletable = (e) => {
-        e.preventDefault();
-        const ExamNumber = e.target.dataset.value;
-        setExamName(e.target.textContent);
+    const toggleRow = (examName) => {
+        setExpandedRow(expandedRow === examName ? null : examName);
 
-        const element = ReportData[ExamNumber];
-        if (!element) return;
+        const element = ReportData[examName];
+        if (element.length === 0) return;
 
         const newArr = [
-            parseInt(element.tamil),
-            parseInt(element.english),
-            parseInt(element.maths),
-            parseInt(element.science),
-            parseInt(element.socialscience)
+            parseInt(element[0].tamil),
+            parseInt(element[0].english),
+            parseInt(element[0].maths),
+            parseInt(element[0].science),
+            parseInt(element[0].socialscience)
         ];
         setSubjectPerArr(newArr); // Update state
-        setVisibility(true);
     };
 
     const [Calendar, setCalendar] = useState([]);
@@ -230,9 +256,9 @@ const StudentReportView = () => {
         AssessmentData.map((element, index) => {
             if (element.assessmentMark != null) {
                 AssessmentArr.push(
-                    <tr key={element.assessmentNote}>
+                    <tr key={index + 123}>
                         <td>{index + 1}</td>
-                        <td>{element.assessmentNote}</td>
+                        <td>{element.assessment.assessmentNote}</td>
                         <td>{element.assessmentMark}/5</td>
                         <td>{element.assessmentMark >= 3 ? "Pass" : "Fail"}</td>
                     </tr>
@@ -241,120 +267,90 @@ const StudentReportView = () => {
         })
     }
 
-    const handlePerformanceCategories = (score) => {
-        if (score >= 450) return 'Excellent';
-        if (score >= 400) return 'Very Good';
-        if (score >= 350) return 'Good';
-        if (score >= 300) return 'Average';
-        return 'Needs Improvement';
-    }
-
     return (
         <div className="studentReport">
             <h1 className="studentReport-title">Student Report - {Student_ID}</h1>
             <div className="acedemicRecord">
-                <div className="acedemicRecord-view">
-                    <div className="acedemicRecord-examlist">
-                        <p className="acedemicRecord-examlist-title">Acedemic Records</p>
-                        <div className="acedemicRecord-table">
-                            <table>
-                                <thead>
+                <p className="acedemicRecord-examlist-title">Acedemic Records</p>
+                <div className="acedemicRecord-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>S.No</th>
+                                <th>Exam</th>
+                                <th>Mark</th>
+                                <th>Feedback</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {ShortListedExams.map((exam, index) =>
+                            (
+                                <React.Fragment key={index}>
                                     <tr>
-                                        <th>S.No</th>
-                                        <th>Exam</th>
-                                        <th>Mark</th>
-                                        <th>Result</th>
+                                        <td>{index + 1}</td>
+                                        <td>{exam}</td>
+                                        <td>{TotalArr[index]}/500</td>
+                                        <td>{handlePerformanceCategories(TotalArr[index])}</td>
+                                        <td><button className="acedemicRecord-showdetailsBn" onClick={() => toggleRow(exam)}>
+                                            {expandedRow === exam ? 'Hide Details ↑' : 'Show Details ↓'}
+                                        </button></td>
                                     </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td><a href="#" data-value={0} onClick={handletable}>Mid Term l</a></td>
-                                        <td>{TotalArr[0]}/500</td>
-                                        <td>{handlePerformanceCategories(TotalArr[0])}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td><a href="#" data-value={3} onClick={handletable}>Quarterly (Term l)</a></td>
-                                        <td>{TotalArr[1]}/500</td>
-                                        <td>{handlePerformanceCategories(TotalArr[1])}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td><a href="#" data-value={1} onClick={handletable}>Mid Term ll</a></td>
-                                        <td>{TotalArr[2]}/500</td>
-                                        <td>{handlePerformanceCategories(TotalArr[2])}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>4</td>
-                                        <td><a href="#" data-value={4} onClick={handletable}>Half Yearly (Term ll)</a></td>
-                                        <td>{TotalArr[3]}/500</td>
-                                        <td>{handlePerformanceCategories(TotalArr[3])}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>5</td>
-                                        <td><a href="#" data-value={2} onClick={handletable}>Mid Term lll</a></td>
-                                        <td>{TotalArr[4]}/500</td>
-                                        <td>{handlePerformanceCategories(TotalArr[4])}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>6</td>
-                                        <td><a href="#" data-value={5} onClick={handletable}>Annual (Term lll)</a></td>
-                                        <td>{TotalArr[5]}/500</td>
-                                        <td>{handlePerformanceCategories(TotalArr[5])}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div className="acedemicRecord-subjectlist">
-                            <p className="acedemicRecord-subjectlist-title">{ExamName} - Subject List</p>
-                            <div className="acedemicRecord-table">
-                                <table >
-                                    <thead>
-                                        <tr>
-                                            <th>S.No</th>
-                                            <th>Subject</th>
-                                            <th>Mark</th>
-                                            <th>Result</th>
+
+                                    {expandedRow === exam && (
+                                        <tr className="acedemicRecord-SingleExamResult">
+                                            <td colSpan={5} className="SingleExamResult-td">
+                                                <table >
+                                                    <caption>{expandedRow} - Subject List</caption>
+                                                    <thead>
+                                                        <tr>
+                                                            <th>S.No</th>
+                                                            <th>Subject</th>
+                                                            <th>Mark</th>
+                                                            <th>Result</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>1</td>
+                                                            <td>Tamil</td>
+                                                            <td>{SubjectPerArr[0]}/100</td>
+                                                            <td>{SubjectPerArr[0] > 34 ? "Pass" : "Fail"}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>2</td>
+                                                            <td>English</td>
+                                                            <td>{SubjectPerArr[1]}/100</td>
+                                                            <td>{SubjectPerArr[1] > 34 ? "Pass" : "Fail"}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>3</td>
+                                                            <td>Maths</td>
+                                                            <td>{SubjectPerArr[2]}/100</td>
+                                                            <td>{SubjectPerArr[2] > 34 ? "Pass" : "Fail"}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>4</td>
+                                                            <td>Science</td>
+                                                            <td>{SubjectPerArr[3]}/100</td>
+                                                            <td>{SubjectPerArr[3] > 34 ? "Pass" : "Fail"}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>5</td>
+                                                            <td>Social Science</td>
+                                                            <td>{SubjectPerArr[4]}/100</td>
+                                                            <td>{SubjectPerArr[4] > 34 ? "Pass" : "Fail"}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
                                         </tr>
-                                    </thead>
-                                    <tbody></tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Tamil</td>
-                                            <td>{SubjectPerArr[0]}/100</td>
-                                            <td>{SubjectPerArr[0] > 34 ? "Pass" : "Fail"}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>English</td>
-                                            <td>{SubjectPerArr[1]}/100</td>
-                                            <td>{SubjectPerArr[1] > 34 ? "Pass" : "Fail"}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>Maths</td>
-                                            <td>{SubjectPerArr[2]}/100</td>
-                                            <td>{SubjectPerArr[2] > 34 ? "Pass" : "Fail"}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>4</td>
-                                            <td>Science</td>
-                                            <td>{SubjectPerArr[3]}/100</td>
-                                            <td>{SubjectPerArr[3] > 34 ? "Pass" : "Fail"}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>5</td>
-                                            <td>Social Science</td>
-                                            <td>{SubjectPerArr[4]}/100</td>
-                                            <td>{SubjectPerArr[4] > 34 ? "Pass" : "Fail"}</td>
-                                        </tr>
-                                    </tfoot>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
+                                    )}
+                                </React.Fragment>
+                            )
+                            )}
+                        </tbody>
+                    </table>
                 </div>
             </div>
             <div className="studentReport-betterview">
@@ -363,30 +359,28 @@ const StudentReportView = () => {
                         <p className="studentReport-attendance-title">Attendance</p>
                     </div>
                     <div className="studentReport-attendance-calendarview">
-                        <div className="studentReport-attendance-calender">
-                            <div className="calendar-main">
-                                {/* Header */}
-                                <div className="calendar-title">
-                                    <button onClick={prevMonth} className="calendar-movebn">
-                                        &#60;
-                                    </button>
-                                    <span>{format(CurrentMonth, "MMMM yyyy")}</span>
-                                    <button onClick={nextMonth} className="calendar-movebn">
-                                        &#62;
-                                    </button>
-                                </div>
+                        <div className="calendar-main">
+                            {/* Header */}
+                            <div className="calendar-title">
+                                <button onClick={prevMonth} className="calendar-movebn">
+                                    &#60;
+                                </button>
+                                <span>{format(CurrentMonth, "MMMM yyyy")}</span>
+                                <button onClick={nextMonth} className="calendar-movebn">
+                                    &#62;
+                                </button>
+                            </div>
 
-                                {/* Week Days */}
-                                <div className="calendar-weektitle">
-                                    {daysInWeek.map((day) => (
-                                        <div key={day}>{day}</div>
-                                    ))}
-                                </div>
+                            {/* Week Days */}
+                            <div className="calendar-weektitle">
+                                {daysInWeek.map((day) => (
+                                    <div key={day}>{day}</div>
+                                ))}
+                            </div>
 
-                                {/* Days */}
-                                <div className="calendar-days">
-                                    {Calendar}
-                                </div>
+                            {/* Days */}
+                            <div className="calendar-days">
+                                {Calendar}
                             </div>
                         </div>
                         <div className="studentReport-attendance-textDiv">

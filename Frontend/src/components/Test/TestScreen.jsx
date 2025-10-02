@@ -1,34 +1,47 @@
-import { useState } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
 
+const ExpandableTable = () => {
+  const [expandedRow, setExpandedRow] = useState(null);
 
-import { Menu, MenuButton, MenuItem, SubMenu } from '@szhsin/react-menu';
-import Popup from 'reactjs-popup';
-import 'reactjs-popup/dist/index.css';
-import { Navigate } from 'react-router-dom';
+  const data = [
+    { id: 1, name: 'Alice', details: 'Alice is a software engineer.' },
+    { id: 2, name: 'Bob', details: 'Bob is a product manager.' },
+    { id: 3, name: 'Charlie', details: 'Charlie is a designer.' },
+  ];
 
-const Test = () => {
-    const [isPresent, setisPresent] = useState(false);
+  const toggleRow = (id) => {
+    setExpandedRow(expandedRow === id ? null : id);
+  };
 
-    const handleClick = async () => {
-        try {
-            const res = await axios.get("user/validaterole", {
-                headers: {
-                    Authorization: "Bearer " + sessionStorage.getItem("authtoken"),
-                }
-            });
-            console.log(res); // You can access the actual role here
-        } catch (error) {
-            console.error("Role validation failed:", error.response?.data || error.message);
-        }
+  return (
+    <table border="1" cellPadding="10">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {data.map((row) => (
+          <React.Fragment key={row.id}>
+            <tr>
+              <td>{row.name}</td>
+              <td>
+                <button onClick={() => toggleRow(row.id)}>
+                  {expandedRow === row.id ? 'Hide Details' : 'Show Details'}
+                </button>
+              </td>
+            </tr>
+            {expandedRow === row.id && (
+              <tr>
+                <td colSpan="2">{row.details}</td>
+              </tr>
+            )}
+          </React.Fragment>
+        ))}
+      </tbody>
+    </table>
+  );
+};
 
-    }
-
-    return (
-        <>
-            <button onClick={() => { handleClick() }}>Test</button>
-        </>
-    )
-}
-
-export default Test;
+export default ExpandableTable;

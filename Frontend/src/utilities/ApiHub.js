@@ -77,7 +77,7 @@ export const Save = async (directURL, saveData) => {
     try {
 
         let response = await baseApi.post(`${directURL}`, saveData);
-        if (response.status === 200 && response.data) {
+        if (response.status === 200 && response.data.displayMessage) {
             toast.success(response.data.displayMessage, { duration: 2000 });
         }
         return response.status;

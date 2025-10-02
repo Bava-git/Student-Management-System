@@ -14,9 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
@@ -148,7 +146,7 @@ public class ExamUploadFile {
     }
 
     @GetMapping("studentreport/{Student_id}")
-    public List<Object> getdataforthisid(@PathVariable String Student_id) {
+    public Map<String, Object> getdataforthisid(@PathVariable String Student_id) {
         List<Midterm_One> mid1mark = midterm1Rep.findbystudentId(Student_id);
         List<Midterm_Two> mid2mark = midterm2Rep.findbystudentId(Student_id);
         List<Midterm_Three> mid3mark = midterm3Rep.findbystudentId(Student_id);
@@ -157,16 +155,16 @@ public class ExamUploadFile {
         List<Annual> annualmark = annualRep.findbystudentId(Student_id);
         List<AssessmentResult> assessmentmark = assessmentResultRep.findByStudentID(Student_id);
 
+        Map<String, Object> markContainer = new LinkedHashMap<>();
+        markContainer.put("Mid Term 1", mid1mark);
+        markContainer.put("Quarterly", quarterlymark);
+        markContainer.put("Mid Term 2", mid2mark);
+        markContainer.put("Half Yearly", halfyearlymark);
+        markContainer.put("Mid Term 3", mid3mark);
+        markContainer.put("Annual", annualmark);
+        markContainer.put("Assessment Mark", assessmentmark);
 
-        List<Object> allMarks = new ArrayList<>();
-        allMarks.addAll(mid1mark);
-        allMarks.addAll(mid2mark);
-        allMarks.addAll(mid3mark);
-        allMarks.addAll(quarterlymark);
-        allMarks.addAll(halfyearlymark);
-        allMarks.addAll(annualmark);
-        allMarks.addAll(assessmentmark);
-        return allMarks;
+        return markContainer;
 
     }
 

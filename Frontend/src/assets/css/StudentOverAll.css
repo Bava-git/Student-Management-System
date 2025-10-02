@@ -1,9 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Winky+Sans:ital,wght@0,300..900;1,300..900&display=swap');
 
 .studentReport-attendance {
-    width: 100%;
     min-height: 300px;
-    /* background-color: white; */
+    border: 1px solid var(--blue-button-hovercolour);
     margin: 10px;
     border-radius: 10px;
     padding: 15px;
@@ -20,7 +19,7 @@
 .studentReport-attendance-title {
     padding: 10px;
     font-size: 1.5em;
-    text-align: center;
+    text-align: start;
 }
 
 .standardlist {
@@ -68,14 +67,11 @@
 .calendar-main {
     font-family: "Winky Sans", sans-serif;
     font-size: 10px;
-}
-
-.calendar-main {
     width: 20rem;
-    height: max-content;
     margin: 5px;
     text-align: center;
     padding: 5px;
+    min-height: 11rem;
 }
 
 .calendar-title {
@@ -150,9 +146,7 @@
 
 .assessmentResult,
 .specialProgramParticipation {
-    width: 100%;
     height: max-content;
-    /* background-color: white; */
     margin: 10px;
     border-radius: 10px;
     padding: 15px;
@@ -160,15 +154,14 @@
 
 .assessmentResult {
     min-height: 240px;
+    border: 1px solid var(--blue-button-hovercolour);
 }
 
 .acedemicRecord {
-    width: 95%;
-    height: max-content;
-    /* background-color: white; */
-    margin: 20px;
     border-radius: 10px;
+    margin: 10px;
     padding: 15px;
+    border: 1px solid var(--blue-button-hovercolour);
 }
 
 .acedemicRecord-title,
@@ -193,23 +186,32 @@ td {
     border: none;
 }
 
-.acedemicRecord-view {
-    display: flex;
-}
-
-.acedemicRecord-examlist,
-.acedemicRecord-subjectlist {
+.acedemicRecord-examlist {
     padding: 15px;
     width: 100%;
 }
 
-.acedemicRecord-examlist-title,
-.acedemicRecord-subjectlist-title {
-    text-align: start;
-    font-size: 1em;
+.acedemicRecord-examlist-title {
     padding: 10px;
+    font-size: 1.5em;
+    text-align: start;
+}
+    
+.acedemicRecord-showdetailsBn {
+    cursor: pointer;
 }
 
+.acedemicRecord-SingleExamResult {
+    background-color: #FFFAFA;
+}
+
+.acedemicRecord-SingleExamResult table {
+    font-size: medium;
+}
+
+.SingleExamResult-td {
+    padding: 1.5rem 15rem;
+}
 
 /* .......................................... */
 

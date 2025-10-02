@@ -1,6 +1,7 @@
 //Admin
 export const login = "/login";
 export const admin = "/admin";
+export const testscreen = "/testscreen";
 export const teacher = "/teacher"
 export const student = "/student";
 export const school = "/school";
