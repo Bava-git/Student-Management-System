@@ -244,7 +244,6 @@ const AssessmentSubmittedList = () => {
     }
 
     const handleTableData = (data) => {
-        console.log("Passed");
         
         setAssessmentTableData([]);
         const LocalArr = [];
@@ -308,6 +307,8 @@ const AssessmentSubmittedList = () => {
             toast.error('Please fill the form correctly');
             return;
         }
+
+        // console.log(sendData);
 
         ApiHub.Update("studentreport/assessmentresult", sendData).then((status) => {
             if (status === 200) {
